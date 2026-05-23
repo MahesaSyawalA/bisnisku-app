@@ -1,0 +1,46 @@
+# ==============================
+# Java & Compiled Files
+# ==============================
+*.class
+*.log
+*.ctxt
+
+# Paket hasil build (Uncomment jika kamu tidak ingin mem-push file jar/war)
+# *.jar
+# *.war
+# *.nar
+# *.ear
+# *.zip
+# *.tar.gz
+# *.rar
+
+# ==============================
+# NetBeans Specific
+# ==============================
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+nbproject/private/
+build.xml.data/
+nbproject/project.xml.user
+*.properties.user
+
+# Jika menggunakan Maven di NetBeans
+/target/
+
+# Jika menggunakan Gradle di NetBeans
+.gradle/
+/build/
+.nb-gradle/
+
+# ==============================
+# OS Generated Files
+# ==============================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
