@@ -74,6 +74,37 @@ public class Index extends javax.swing.JFrame {
         int userId = UserSession.getUserId();
 
         initComponents();
+        // Clear placeholder Nama
+        jP2NameExpenseField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (jP2NameExpenseField.getText().equals("Contoh: Beli biji Kopi 10kg")) {
+                    jP2NameExpenseField.setText("");
+                    jP2NameExpenseField.setForeground(new java.awt.Color(204, 204, 204));
+                }
+            }
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (jP2NameExpenseField.getText().isEmpty()) {
+                    jP2NameExpenseField.setText("Contoh: Beli biji Kopi 10kg");
+                    jP2NameExpenseField.setForeground(new java.awt.Color(153, 153, 153));
+                }
+            }
+        });
+
+        // Clear placeholder Nominal
+        jP2NominalField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (jP2NominalField.getText().equals("Contoh: 850000")) {
+                    jP2NominalField.setText("");
+                    jP2NominalField.setForeground(new java.awt.Color(204, 204, 204));
+                }
+            }
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (jP2NominalField.getText().isEmpty()) {
+                    jP2NominalField.setText("Contoh: 850000");
+                    jP2NominalField.setForeground(new java.awt.Color(153, 153, 153));
+                }
+            }
+        });
         conn = new connection();
         this.controller = new TrackYourExpensesController();
         this.setLocationRelativeTo(null);
@@ -1841,6 +1872,9 @@ public class Index extends javax.swing.JFrame {
 
     private void tabRekapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabRekapMouseClicked
         // TODO add your handling code here:
+        int userId = UserSession.getUserId();
+        setupComboBox();                        // refresh dropdown bulan
+        loadData(userId, "Semua Bulan");        // load data tabel
         switchTab(jP4, tabRekap);
     }//GEN-LAST:event_tabRekapMouseClicked
 
@@ -1956,6 +1990,12 @@ public class Index extends javax.swing.JFrame {
             );
 
             double persen = (saldoSaatIni / modalAwal) * 100;
+            
+            // Setelah hitung persen
+            int progressValue = (int) Math.min(persen, 100); // cap di 100
+            jProgressBar1.setMinimum(0);
+            jProgressBar1.setMaximum(100);
+            jProgressBar1.setValue(progressValue);
 
             if (profit > 0) {
 
@@ -1969,7 +2009,7 @@ public class Index extends javax.swing.JFrame {
                         new java.awt.Color(220, 255, 220)
                 );
 
-            } else if (saldoSaatIni >= modalAwal * 0.5) {
+            } else if (persen >= 50) {
 
                 jP1level.setText("Level: Perlu Waspada 📉");
 
@@ -2492,20 +2532,33 @@ public class Index extends javax.swing.JFrame {
             String sql;
             if (bulan == null || bulan.equals("Semua Bulan")) {
                 // Group by Bulan dan Kategori
-                sql = "SELECT kategori, SUM(nominal) AS total_nominal, DATE_FORMAT(tanggal, '%Y-%m') AS bulan_transaksi "
-                        + "FROM transaksi WHERE user_id = ? "
-                        + "GROUP BY bulan_transaksi, kategori "
-                        + "ORDER BY bulan_transaksi DESC, total_nominal DESC";
+                sql = "SELECT 'Pemasukan' AS kategori, SUM(total_pendapatan) AS total_nominal, "
+                    + "DATE_FORMAT(tanggal, '%Y-%m') AS bulan_transaksi "
+                    + "FROM pemasukan_harian WHERE id_user = ? "
+                    + "UNION ALL "
+                    + "SELECT kategori, SUM(nominal) AS total_nominal, "
+                    + "DATE_FORMAT(tanggal, '%Y-%m') AS bulan_transaksi "
+                    + "FROM transaksi WHERE user_id = ? "
+                    + "GROUP BY bulan_transaksi, kategori "
+                    + "ORDER BY bulan_transaksi DESC, total_nominal DESC";
             } else {
                 // Group by Bulan dan Kategori, dengan filter bulan spesifik
-                sql = "SELECT kategori, SUM(nominal) AS total_nominal, DATE_FORMAT(tanggal, '%Y-%m') AS bulan_transaksi "
-                        + "FROM transaksi WHERE user_id = ? AND DATE_FORMAT(tanggal, '%Y-%m') = ? "
-                        + "GROUP BY bulan_transaksi, kategori "
-                        + "ORDER BY total_nominal DESC";
+                sql = "SELECT 'Pemasukan' AS kategori, SUM(total_pendapatan) AS total_nominal, "
+                    + "DATE_FORMAT(tanggal, '%Y-%m') AS bulan_transaksi "
+                    + "FROM pemasukan_harian WHERE id_user = ? AND DATE_FORMAT(tanggal, '%Y-%m') = ? "
+                    + "UNION ALL "
+                    + "SELECT kategori, SUM(nominal) AS total_nominal, "
+                    + "DATE_FORMAT(tanggal, '%Y-%m') AS bulan_transaksi "
+                    + "FROM transaksi WHERE user_id = ? AND DATE_FORMAT(tanggal, '%Y-%m') = ? "
+                    + "GROUP BY bulan_transaksi, kategori "
+                    + "ORDER BY total_nominal DESC";
             }
 
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setInt(1, userId);
+                ps.setString(2, bulan);
+                ps.setInt(3, userId);   // tambah ini
+                ps.setString(4, bulan); // tambah ini
 
                 if (bulan != null && !bulan.equals("Semua Bulan")) {
                     ps.setString(2, bulan);
