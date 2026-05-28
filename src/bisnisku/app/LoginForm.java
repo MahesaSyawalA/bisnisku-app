@@ -24,6 +24,38 @@ public class LoginForm extends javax.swing.JFrame {
     public LoginForm() {
         initComponents();
         conn = new connection();
+        // Clear placeholder Username
+        usernameInput.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (usernameInput.getText().equals("Masukan username anda")) {
+                    usernameInput.setText("");
+                    usernameInput.setForeground(new java.awt.Color(204, 204, 204));
+                }
+            }
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (usernameInput.getText().isEmpty()) {
+                    usernameInput.setText("Masukan username anda");
+                    usernameInput.setForeground(new java.awt.Color(153, 153, 153));
+                }
+            }
+        });
+
+        // Clear placeholder Password
+        passwordInput.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (new String(passwordInput.getPassword()).equals("jPasswordField1")) {
+                    passwordInput.setText("");
+                    passwordInput.setForeground(new java.awt.Color(204, 204, 204));
+                }
+            }
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (new String(passwordInput.getPassword()).isEmpty()) {
+                    passwordInput.setText("jPasswordField1");
+                    passwordInput.setForeground(new java.awt.Color(153, 153, 153));
+                }
+            }
+        });
+        
         this.setLocationRelativeTo(null);
     }
 
@@ -298,7 +330,7 @@ public class LoginForm extends javax.swing.JFrame {
                     this.dispose();
                 }
 
-                this.dispose();
+                
             } else {
                 JOptionPane.showMessageDialog(null, "Username atau Password Salah!");
             }
