@@ -82,6 +82,7 @@ public class Index extends javax.swing.JFrame {
                     jP2NameExpenseField.setForeground(new java.awt.Color(204, 204, 204));
                 }
             }
+
             public void focusLost(java.awt.event.FocusEvent e) {
                 if (jP2NameExpenseField.getText().isEmpty()) {
                     jP2NameExpenseField.setText("Contoh: Beli biji Kopi 10kg");
@@ -98,6 +99,7 @@ public class Index extends javax.swing.JFrame {
                     jP2NominalField.setForeground(new java.awt.Color(204, 204, 204));
                 }
             }
+
             public void focusLost(java.awt.event.FocusEvent e) {
                 if (jP2NominalField.getText().isEmpty()) {
                     jP2NominalField.setText("Contoh: 850000");
@@ -238,6 +240,8 @@ public class Index extends javax.swing.JFrame {
         titleRekap1 = new javax.swing.JLabel();
         tabLeaderboard = new javax.swing.JPanel();
         titleRekap2 = new javax.swing.JLabel();
+        logoutButton = new javax.swing.JPanel();
+        titleRekap3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jP4 = new javax.swing.JScrollPane();
         jPanel15 = new javax.swing.JPanel();
@@ -550,6 +554,35 @@ public class Index extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        logoutButton.setBackground(new java.awt.Color(102, 102, 102));
+        logoutButton.setForeground(new java.awt.Color(255, 255, 255));
+        logoutButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutButtonMouseClicked(evt);
+            }
+        });
+
+        titleRekap3.setFont(new java.awt.Font("Poppins SemiBold", 0, 14)); // NOI18N
+        titleRekap3.setForeground(new java.awt.Color(255, 255, 255));
+        titleRekap3.setText("Logout");
+
+        javax.swing.GroupLayout logoutButtonLayout = new javax.swing.GroupLayout(logoutButton);
+        logoutButton.setLayout(logoutButtonLayout);
+        logoutButtonLayout.setHorizontalGroup(
+            logoutButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(logoutButtonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(titleRekap3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        logoutButtonLayout.setVerticalGroup(
+            logoutButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(logoutButtonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(titleRekap3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -561,6 +594,7 @@ public class Index extends javax.swing.JFrame {
             .addComponent(tabRekap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(tabPemasukan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(tabLeaderboard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(logoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -578,6 +612,8 @@ public class Index extends javax.swing.JFrame {
                 .addComponent(tabPemasukan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tabLeaderboard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -787,7 +823,7 @@ public class Index extends javax.swing.JFrame {
                                 .addComponent(jP3MonthDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jP3YearDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel19Layout.setVerticalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1990,7 +2026,7 @@ public class Index extends javax.swing.JFrame {
             );
 
             double persen = (saldoSaatIni / modalAwal) * 100;
-            
+
             // Setelah hitung persen
             int progressValue = (int) Math.min(persen, 100); // cap di 100
             jProgressBar1.setMinimum(0);
@@ -2280,6 +2316,34 @@ public class Index extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jP6ShowLeaderboardButtonActionPerformed
 
+    private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
+        // TODO add your handling code here:
+        int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Apakah Anda yakin ingin logout?",
+                "Konfirmasi Logout",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (confirm == JOptionPane.YES_OPTION) {
+
+            UserSession.clearSession();
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Berhasil logout",
+                    "Informasi",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+
+            LoginForm login = new LoginForm();
+            login.setVisible(true);
+
+            this.dispose();
+        }
+    }//GEN-LAST:event_logoutButtonMouseClicked
+
 //    Coding Kebutuhan jP 3 Category
     private void setupCategoryComboBox() {
         // 1. Bersihkan item bawaan default ("Item 1", "Item 2", dst)
@@ -2533,25 +2597,25 @@ public class Index extends javax.swing.JFrame {
             if (bulan == null || bulan.equals("Semua Bulan")) {
                 // Group by Bulan dan Kategori
                 sql = "SELECT 'Pemasukan' AS kategori, SUM(total_pendapatan) AS total_nominal, "
-                    + "DATE_FORMAT(tanggal, '%Y-%m') AS bulan_transaksi "
-                    + "FROM pemasukan_harian WHERE id_user = ? "
-                    + "UNION ALL "
-                    + "SELECT kategori, SUM(nominal) AS total_nominal, "
-                    + "DATE_FORMAT(tanggal, '%Y-%m') AS bulan_transaksi "
-                    + "FROM transaksi WHERE user_id = ? "
-                    + "GROUP BY bulan_transaksi, kategori "
-                    + "ORDER BY bulan_transaksi DESC, total_nominal DESC";
+                        + "DATE_FORMAT(tanggal, '%Y-%m') AS bulan_transaksi "
+                        + "FROM pemasukan_harian WHERE id_user = ? "
+                        + "UNION ALL "
+                        + "SELECT kategori, SUM(nominal) AS total_nominal, "
+                        + "DATE_FORMAT(tanggal, '%Y-%m') AS bulan_transaksi "
+                        + "FROM transaksi WHERE user_id = ? "
+                        + "GROUP BY bulan_transaksi, kategori "
+                        + "ORDER BY bulan_transaksi DESC, total_nominal DESC";
             } else {
                 // Group by Bulan dan Kategori, dengan filter bulan spesifik
                 sql = "SELECT 'Pemasukan' AS kategori, SUM(total_pendapatan) AS total_nominal, "
-                    + "DATE_FORMAT(tanggal, '%Y-%m') AS bulan_transaksi "
-                    + "FROM pemasukan_harian WHERE id_user = ? AND DATE_FORMAT(tanggal, '%Y-%m') = ? "
-                    + "UNION ALL "
-                    + "SELECT kategori, SUM(nominal) AS total_nominal, "
-                    + "DATE_FORMAT(tanggal, '%Y-%m') AS bulan_transaksi "
-                    + "FROM transaksi WHERE user_id = ? AND DATE_FORMAT(tanggal, '%Y-%m') = ? "
-                    + "GROUP BY bulan_transaksi, kategori "
-                    + "ORDER BY total_nominal DESC";
+                        + "DATE_FORMAT(tanggal, '%Y-%m') AS bulan_transaksi "
+                        + "FROM pemasukan_harian WHERE id_user = ? AND DATE_FORMAT(tanggal, '%Y-%m') = ? "
+                        + "UNION ALL "
+                        + "SELECT kategori, SUM(nominal) AS total_nominal, "
+                        + "DATE_FORMAT(tanggal, '%Y-%m') AS bulan_transaksi "
+                        + "FROM transaksi WHERE user_id = ? AND DATE_FORMAT(tanggal, '%Y-%m') = ? "
+                        + "GROUP BY bulan_transaksi, kategori "
+                        + "ORDER BY total_nominal DESC";
             }
 
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -2733,6 +2797,7 @@ public class Index extends javax.swing.JFrame {
     private javax.swing.JLabel jsubHead1;
     private javax.swing.JLabel jsubHead2;
     private javax.swing.JPanel levelPanel;
+    private javax.swing.JPanel logoutButton;
     private javax.swing.JLabel plusIconPemasukan;
     private javax.swing.JLabel saldoPemasukan;
     private javax.swing.JPanel tabDashboard;
@@ -2748,6 +2813,7 @@ public class Index extends javax.swing.JFrame {
     private javax.swing.JLabel titleRekap;
     private javax.swing.JLabel titleRekap1;
     private javax.swing.JLabel titleRekap2;
+    private javax.swing.JLabel titleRekap3;
     private javax.swing.JLabel titleTransaksi;
     // End of variables declaration//GEN-END:variables
 }
