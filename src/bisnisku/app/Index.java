@@ -5,8 +5,12 @@
 package bisnisku.app;
 
 import bisnisku.app.controllers.TrackYourExpensesController;
+import bisnisku.app.controllers.DashboardController;
+import bisnisku.app.controllers.CategoryController;
+
 import java.sql.Connection;
 import java.sql.Date;
+import java.util.Map;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,6 +26,8 @@ public class Index extends javax.swing.JFrame {
     connection conn;
 
     private TrackYourExpensesController controller;
+    private DashboardController dashboardController;
+    private CategoryController categoryController;
     private final String[] KATEGORI = {"Operasional", "Gaji Karyawan", "Utilitas", "Gaya Hidup", "Lain-lain"};
     private final java.awt.Color WARNA_AKTIF = new java.awt.Color(204, 204, 204);
     private final java.awt.Color WARNA_TIDAK_AKTIF = new java.awt.Color(102, 102, 102);
@@ -110,15 +116,17 @@ public class Index extends javax.swing.JFrame {
         });
         conn = new connection();
         this.controller = new TrackYourExpensesController();
+        this.dashboardController = new DashboardController();
         this.setLocationRelativeTo(null);
 
-        //Kebutuhan jP1        
+        //Kebutuhan jP1     
         jP1loadData(userId);
 
         //Kebutuhan jP3
         setupCategoryComboBox();
         int currentMonth = jP3MonthDropdown.getMonth();
         int currentYear = jP3YearDropdown.getYear();
+        this.categoryController = new CategoryController();
         loadDataByCategory(userId, "Semua Kategori", currentMonth, currentYear, false);
 
         jP3CategoriesDropdown.addActionListener(new java.awt.event.ActionListener() {
@@ -1899,213 +1907,57 @@ public class Index extends javax.swing.JFrame {
 
     //Coding Kebuthan jP 1 Dashboard  
     public void jP1loadData(int userId) {
-
-        try (Connection conn = connection.getKoneksi()) {
-
-            if (conn == null) {
-                return;
-            }
-
-            double modalAwal = 0;
-            String namaBisnis = "";
-
-            try (PreparedStatement ps = conn.prepareStatement(
-                    "SELECT modal_awal, nama_bisnis "
-                    + "FROM bisnis_profile "
-                    + "WHERE user_id = ?")) {
-
-                ps.setInt(1, userId);
-
-                try (ResultSet rs = ps.executeQuery()) {
-
-                    if (rs.next()) {
-
-                        modalAwal = rs.getDouble("modal_awal");
-                        namaBisnis = rs.getString("nama_bisnis");
-
-                        jP1modalAwal.setText(
-                                "RP. " + String.format("%,.0f", modalAwal)
-                        );
-
-                        jP1namaBisnis.setText(namaBisnis);
-                    }
-                }
-            }
-
-            double totalKeluar = 0;
-
-            try (PreparedStatement ps = conn.prepareStatement(
-                    "SELECT COALESCE(SUM(nominal),0) AS total "
-                    + "FROM transaksi "
-                    + "WHERE user_id = ?")) {
-
-                ps.setInt(1, userId);
-
-                try (ResultSet rs = ps.executeQuery()) {
-
-                    if (rs.next()) {
-
-                        totalKeluar = rs.getDouble("total");
-
-                        jP1totalKeluar.setText(
-                                "RP. " + String.format("%,.0f", totalKeluar)
-                        );
-                    }
-                }
-            }
-
-            double totalPemasukan = 0;
-
-            try (PreparedStatement ps = conn.prepareStatement(
-                    "SELECT COALESCE(SUM(total_pendapatan),0) AS total "
-                    + "FROM pemasukan_harian "
-                    + "WHERE id_user = ?")) {
-
-                ps.setInt(1, userId);
-
-                try (ResultSet rs = ps.executeQuery()) {
-
-                    if (rs.next()) {
-
-                        totalPemasukan = rs.getDouble("total");
-
-                        jP1totalPemasukan.setText(
-                                "RP. " + String.format("%,.0f", totalPemasukan)
-                        );
-                    }
-                }
-            }
-
-            double saldoSaatIni = modalAwal + totalPemasukan - totalKeluar;
-
-            jP1saldoSaatIni.setText(
-                    "RP. " + String.format("%,.0f", saldoSaatIni)
-            );
-
-            double profit = totalPemasukan - totalKeluar;
-
-            jP1transaksiTerakhir.setText(
-                    "RP. " + String.format("%,.0f", profit)
-            );
-
-            double persen = (saldoSaatIni / modalAwal) * 100;
-
-            // Setelah hitung persen
-            int progressValue = (int) Math.min(persen, 100); // cap di 100
-            jProgressBar1.setMinimum(0);
-            jProgressBar1.setMaximum(100);
-            jProgressBar1.setValue(progressValue);
-
-            if (profit > 0) {
-
-                jP1level.setText("Level: Bisnis Berkembang 📈");
-
-                jP1levelDesc.setText(
-                        "Profit +" + String.format("%.1f", persen - 100) + "% dari modal awal"
-                );
-
-                levelPanel.setBackground(
-                        new java.awt.Color(220, 255, 220)
-                );
-
-            } else if (persen >= 50) {
-
-                jP1level.setText("Level: Perlu Waspada 📉");
-
-                jP1levelDesc.setText(
-                        "Saldo tersisa "
-                        + String.format("%.1f", persen)
-                        + "% dari modal"
-                );
-
-                levelPanel.setBackground(
-                        new java.awt.Color(255, 243, 205)
-                );
-
-            } else {
-
-                jP1level.setText("Level: Kondisi Kritis 🚨");
-
-                jP1levelDesc.setText(
-                        "Kerugian bisnis mulai besar"
-                );
-
-                levelPanel.setBackground(
-                        new java.awt.Color(255, 220, 220)
-                );
-            }
-
-            if (saldoSaatIni < 0) {
-
-                jP1saldoSaatIni.setForeground(
-                        new java.awt.Color(255, 123, 103)
-                );
-
-            } else {
-
-                jP1saldoSaatIni.setForeground(
-                        new java.awt.Color(30, 158, 117)
-                );
-            }
-
-            try (PreparedStatement ps = conn.prepareStatement(
-                    "SELECT nominal "
-                    + "FROM transaksi "
-                    + "WHERE user_id = ? "
-                    + "ORDER BY id DESC LIMIT 1")) {
-
-                ps.setInt(1, userId);
-
-                try (ResultSet rs = ps.executeQuery()) {
-
-                    if (rs.next()) {
-
-                        double transaksiTerakhir = rs.getDouble("nominal");
-
-                        jP1transaksiTerakhir.setText(
-                                "RP. " + String.format("%,.0f", transaksiTerakhir)
-                        );
-
-                    } else {
-
-                        jP1transaksiTerakhir.setText("RP. 0");
-                    }
-                }
-            }
-
-            try (PreparedStatement ps = conn.prepareStatement(
-                    "SELECT nama, nominal, tanggal "
-                    + "FROM transaksi "
-                    + "WHERE user_id = ? "
-                    + "ORDER BY tanggal DESC")) {
-
-                ps.setInt(1, userId);
-
-                try (ResultSet rs = ps.executeQuery()) {
-
-                    DefaultTableModel model
-                            = (DefaultTableModel) jP1table.getModel();
-
-                    model.setRowCount(0);
-
-                    while (rs.next()) {
-
-                        String nama = rs.getString("nama");
-                        double nominal = rs.getDouble("nominal");
-                        Date tanggal = rs.getDate("tanggal");
-
-                        model.addRow(new Object[]{
-                            nama,
-                            "RP. " + String.format("%,.0f", nominal),
-                            tanggal
-                        });
-                    }
-                }
-            }
-
-        } catch (SQLException e) {
-
-            System.out.println("Error: " + e.getMessage());
+        // Panggil fungsi logic dari Controller
+        Map<String, Object> data = dashboardController.getDashboardData(userId);
+
+        // Jika data kosong (karena error koneksi dll), hentikan eksekusi
+        if (data.isEmpty()) {
+            return;
+        }
+
+        // Terapkan data text ke masing-masing JLabel (casting ke String)
+        jP1namaBisnis.setText((String) data.get("namaBisnis"));
+        jP1modalAwal.setText((String) data.get("modalAwalStr"));
+        jP1totalKeluar.setText((String) data.get("totalKeluarStr"));
+        jP1totalPemasukan.setText((String) data.get("totalPemasukanStr"));
+        jP1saldoSaatIni.setText((String) data.get("saldoSaatIniStr"));
+        jP1transaksiTerakhir.setText((String) data.get("transaksiTerakhirStr"));
+
+        // Mengatur Warna Saldo (Merah jika minus, Hijau jika positif)
+        boolean isSaldoNegative = (boolean) data.get("isSaldoNegative");
+        if (isSaldoNegative) {
+            jP1saldoSaatIni.setForeground(new java.awt.Color(255, 123, 103)); // Merah
+        } else {
+            jP1saldoSaatIni.setForeground(new java.awt.Color(30, 158, 117)); // Hijau
+        }
+
+        // Mengatur Progress Bar
+        jProgressBar1.setMinimum(0);
+        jProgressBar1.setMaximum(100);
+        jProgressBar1.setValue((int) data.get("progressValue"));
+
+        // Mengatur Text Level & Deskripsi
+        jP1level.setText((String) data.get("levelText"));
+        jP1levelDesc.setText((String) data.get("levelDescText"));
+
+        // Mengatur Warna Panel Level berdasarkan Status (1=Hijau, 2=Kuning, 3=Merah)
+        int levelStatus = (int) data.get("levelStatus");
+        switch (levelStatus) {
+            case 1:
+                levelPanel.setBackground(new java.awt.Color(220, 255, 220));
+                break;
+            case 2:
+                levelPanel.setBackground(new java.awt.Color(255, 243, 205));
+                break;
+            case 3:
+                levelPanel.setBackground(new java.awt.Color(255, 220, 220));
+                break;
+        }
+
+        // Mengatur Tabel
+        DefaultTableModel tableModel = (DefaultTableModel) data.get("tableModel");
+        if (tableModel != null) {
+            jP1table.setModel(tableModel);
         }
     }
 
@@ -2306,126 +2158,21 @@ public class Index extends javax.swing.JFrame {
     }
 
     public void loadDataByCategory(int userId, String kategori, int bulan, int tahun, boolean semuaBulan) {
-        try (Connection conn = bisnisku.app.connection.getKoneksi()) {
-            if (conn == null) {
-                System.out.println("Error: Gagal mendapatkan koneksi database.");
-                return;
-            }
+        // Minta data yang sudah diolah dari Controller
+        Map<String, Object> data = categoryController.getCategoryData(userId, kategori, bulan, tahun, semuaBulan);
 
-            // 1. Menyusun Query SQL secara dinamis
-            StringBuilder sql = new StringBuilder(
-                    "SELECT tanggal, nama, nominal, kategori FROM transaksi WHERE user_id = ?"
-            );
-
-            // Filter Kategori (Jika bukan "Semua Kategori")
-            if (kategori != null && !kategori.equals("Semua Kategori")) {
-                sql.append(" AND kategori = ?");
-            }
-
-            // Filter Waktu: Hanya ditambahkan jika pengguna TIDAK memilih "Semua Bulan"
-            if (semuaBulan) {
-                // Jika checkbox dicentang, HANYA filter berdasarkan tahun terpilih
-                sql.append(" AND YEAR(tanggal) = ?");
-            } else {
-                // Jika tidak dicentang, filter berdasarkan bulan dan tahun
-                sql.append(" AND MONTH(tanggal) = ? AND YEAR(tanggal) = ?");
-            }
-
-            sql.append(" ORDER BY tanggal DESC");
-
-            try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
-                int paramIndex = 1;
-                ps.setInt(paramIndex++, userId);
-
-                if (kategori != null && !kategori.equals("Semua Kategori")) {
-                    ps.setString(paramIndex++, kategori);
-                }
-
-                // Parameter waktu hanya diisi jika filter bulan aktif
-                if (semuaBulan) {
-                    // Jika dicentang, kirimkan parameter TAHUN saja
-                    ps.setInt(paramIndex++, tahun);
-                } else {
-                    // Jika tidak dicentang, kirimkan parameter BULAN dan TAHUN
-                    ps.setInt(paramIndex++, (bulan + 1));
-                    ps.setInt(paramIndex++, tahun);
-                }
-
-                // 2. Eksekusi Query dan Olah Data
-                try (ResultSet rs = ps.executeQuery()) {
-                    javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(
-                            new String[]{"Tanggal", "Nama", "Nominal", "Kat."}, 0);
-
-                    int totalTransaksi = 0;
-                    double totalNominal = 0;
-
-                    while (rs.next()) {
-                        double nominal = rs.getDouble("nominal");
-                        totalNominal += nominal;
-                        totalTransaksi++;
-
-                        // Format Tanggal (dd/MM)
-                        java.sql.Date dbDate = rs.getDate("tanggal");
-                        String formattedDate = "";
-                        if (dbDate != null) {
-                            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM");
-                            formattedDate = sdf.format(dbDate);
-                        }
-
-                        // Format nominal rupiah singkat (rb / jt)
-                        String formattedNominal;
-                        if (nominal >= 1000000) {
-                            formattedNominal = "Rp " + String.format("%,.1f", nominal / 1000000) + " jt";
-                        } else if (nominal >= 1000) {
-                            formattedNominal = "Rp " + String.format("%,.0f", nominal / 1000) + " rb";
-                        } else {
-                            formattedNominal = "Rp " + String.format("%,.0f", nominal);
-                        }
-
-                        // Singkatan Kategori
-                        String katRaw = rs.getString("kategori");
-                        String katShort = katRaw;
-                        if (katRaw.equalsIgnoreCase("Operasional")) {
-                            katShort = "Op.";
-                        } else if (katRaw.equalsIgnoreCase("Utilitas")) {
-                            katShort = "Util.";
-                        } else if (katRaw.equalsIgnoreCase("Gaya Hidup")) {
-                            katShort = "GL";
-                        } else if (katRaw.equalsIgnoreCase("Gaji Karyawan")) {
-                            katShort = "Gaji";
-                        }
-
-                        model.addRow(new Object[]{
-                            formattedDate,
-                            rs.getString("nama"),
-                            formattedNominal,
-                            katShort
-                        });
-                    }
-
-                    // Set data ke komponen JTable halaman jP3
-                    jP3Table.setModel(model);
-
-                    // Update Label Jumlah Transaksi
-                    jP3ShowData.setText(totalTransaksi + " transaksi ditemukan");
-
-                    // =============================================================
-                    // FIX YANG KURANG: Memunculkan SUM Nominal ke jP3TotalData
-                    // =============================================================
-                    if (totalNominal >= 1000000) {
-                        jP3TotalData.setText("Total: Rp " + String.format("%,.2f", totalNominal / 1000000) + " jt");
-                    } else if (totalNominal >= 1000) {
-                        jP3TotalData.setText("Total: Rp " + String.format("%,.0f", totalNominal / 1000) + " rb");
-                    } else {
-                        jP3TotalData.setText("Total: Rp " + String.format("%,.0f", totalNominal));
-                    }
-                    // =============================================================
-
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Error di loadDataByCategory: " + e.getMessage());
+        if (data.isEmpty()) {
+            return;
         }
+
+        // Terapkan data ke komponen UI (Tabel dan Label)
+        DefaultTableModel model = (DefaultTableModel) data.get("tableModel");
+        if (model != null) {
+            jP3Table.setModel(model);
+        }
+
+        jP3ShowData.setText((String) data.get("totalTransaksiStr"));
+        jP3TotalData.setText((String) data.get("totalNominalStr"));
     }
 
     // Contoh trigger terpusat
