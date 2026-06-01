@@ -7,6 +7,11 @@ package bisnisku.app;
 import bisnisku.app.controllers.TrackYourExpensesController;
 import bisnisku.app.controllers.DashboardController;
 import bisnisku.app.controllers.CategoryController;
+import bisnisku.app.controllers.RekapController;
+import bisnisku.app.controllers.IncomeController;
+import bisnisku.app.controllers.LeaderboardController;
+
+import java.util.List;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -28,6 +33,10 @@ public class Index extends javax.swing.JFrame {
     private TrackYourExpensesController controller;
     private DashboardController dashboardController;
     private CategoryController categoryController;
+    private RekapController rekapController;
+    private IncomeController incomeController;
+    private LeaderboardController leaderboardController;
+
     private final String[] KATEGORI = {"Operasional", "Gaji Karyawan", "Utilitas", "Gaya Hidup", "Lain-lain"};
     private final java.awt.Color WARNA_AKTIF = new java.awt.Color(204, 204, 204);
     private final java.awt.Color WARNA_TIDAK_AKTIF = new java.awt.Color(102, 102, 102);
@@ -117,6 +126,9 @@ public class Index extends javax.swing.JFrame {
         conn = new connection();
         this.controller = new TrackYourExpensesController();
         this.dashboardController = new DashboardController();
+        this.rekapController = new RekapController();
+        this.incomeController = new IncomeController();
+        this.leaderboardController = new LeaderboardController();
         this.setLocationRelativeTo(null);
 
         //Kebutuhan jP1     
@@ -2019,100 +2031,45 @@ public class Index extends javax.swing.JFrame {
             return;
         }
 
-        try {
-
-            Connection conn = connection.getKoneksi();
-
-            String sql = "INSERT INTO pemasukan_harian "
-                    + "(id_user, tanggal, total_pendapatan) "
-                    + "VALUES (?, CURDATE(), ?)";
-
-            PreparedStatement pst = conn.prepareStatement(sql);
-
-            pst.setInt(1, 1);
-            pst.setLong(2, totalSaldo);
-            pst.executeUpdate();
+        int userId = UserSession.getUserId();
+        boolean sukses = incomeController.simpanPemasukan(userId, totalSaldo);
+        if (sukses) {
             JOptionPane.showMessageDialog(
                     this,
-                    "Hari diselesaikan! Rp. " + totalSaldo + " berhasil disimpan."
+                    "Hari diselesaikan! Rp " + String.format("%,d", totalSaldo) + " berhasil disimpan."
             );
+
             totalSaldo = 0;
-            saldoPemasukan.setText("Rp. 0");
+            saldoPemasukan.setText("Rp 0");
 
-            pst.close();
-            conn.close();
-
-        } catch (Exception e) {
-
+        } else {
             JOptionPane.showMessageDialog(
                     this,
-                    "Gagal menyimpan data: " + e.getMessage()
+                    "Gagal menyimpan data pemasukan ke database.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
             );
         }
     }//GEN-LAST:event_finishButtonPemasukanMouseClicked
 
     private void jP6ShowLeaderboardButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jP6ShowLeaderboardButtonMouseClicked
-        // TODO add your handling code here:
-        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jP6LeaderboardTable.getModel();
-        model.setRowCount(0);
+        // 1. Minta data dari Controller
+        Map<String, Object> data = leaderboardController.getLeaderboardData();
 
-        // Reset podium jika data kosong
-        jP6Top1.setText("-");
-        jP6Top2.setText("-");
-        jP6Top3.setText("-");
-
-        try {
-            java.sql.Connection conn = bisnisku.app.connection.getKoneksi();
-
-            if (conn == null) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Gagal terhubung ke database!");
-                return;
-            }
-
-            // Query yang diperbaiki (Menggunakan Subquery agar tidak terjadi duplikasi Cartesian Product)
-            // Menyesuaikan dengan skema tabel bisnis_profile, pemasukan_harian, dan transaksi
-            String sql = "SELECT b.nama_bisnis, "
-                    + "(b.modal_awal + COALESCE(p.total_pemasukan, 0) - COALESCE(t.total_pengeluaran, 0)) AS saldo "
-                    + "FROM bisnis_profile b "
-                    + "LEFT JOIN (SELECT id_user, SUM(total_pendapatan) AS total_pemasukan FROM pemasukan_harian GROUP BY id_user) p "
-                    + "  ON b.user_id = p.id_user "
-                    + "LEFT JOIN (SELECT user_id, SUM(nominal) AS total_pengeluaran FROM transaksi GROUP BY user_id) t "
-                    + "  ON b.user_id = t.user_id "
-                    + "ORDER BY saldo DESC";
-
-            java.sql.Statement stmt = conn.createStatement();
-            java.sql.ResultSet rs = stmt.executeQuery(sql);
-
-            int rank = 1;
-            while (rs.next()) {
-                String namaBisnis = rs.getString("nama_bisnis");
-                long saldoBersih = rs.getLong("saldo");
-                String tanggal = "-";
-
-                model.addRow(new Object[]{namaBisnis, "Rp " + saldoBersih, tanggal});
-
-                // Ubah baris ini:
-                // Lebar div HTML (80px) sekarang sama persis dengan dimensi JLabel (80px)
-                String formattedName = "<html><div style='text-align: center; width: 60px; word-wrap: break-word;'>" + namaBisnis + "</div></html>";
-
-                if (rank == 1) {
-                    jP6Top1.setText(formattedName);
-                } else if (rank == 2) {
-                    jP6Top2.setText(formattedName);
-                } else if (rank == 3) {
-                    jP6Top3.setText(formattedName);
-                }
-
-                rank++;
-            }
-
-            rs.close();
-            stmt.close();
-            conn.close();
-
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Gagal memuat Leaderboard: " + e.getMessage());
+        // Cek jika terjadi error koneksi dll (data tidak mengandung tabel model)
+        if (!data.containsKey("tableModel")) {
+            JOptionPane.showMessageDialog(this, "Gagal memuat Leaderboard!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
+
+        // 2. Terapkan Data Tabel ke jP6LeaderboardTable
+        DefaultTableModel model = (DefaultTableModel) data.get("tableModel");
+        jP6LeaderboardTable.setModel(model);
+
+        // 3. Terapkan Teks Podium
+        jP6Top1.setText((String) data.get("top1Name"));
+        jP6Top2.setText((String) data.get("top2Name"));
+        jP6Top3.setText((String) data.get("top3Name"));
     }//GEN-LAST:event_jP6ShowLeaderboardButtonMouseClicked
 
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
@@ -2143,7 +2100,6 @@ public class Index extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_logoutButtonMouseClicked
 
-//    Coding Kebutuhan jP 3 Category
     private void setupCategoryComboBox() {
         // 1. Bersihkan item bawaan default ("Item 1", "Item 2", dst)
         jP3CategoriesDropdown.removeAllItems();
@@ -2207,145 +2163,40 @@ public class Index extends javax.swing.JFrame {
     private void setupComboBox() {
         int userId = UserSession.getUserId();
 
-        try (Connection conn = bisnisku.app.connection.getKoneksi()) {
-            if (conn == null) {
-                System.out.println("Error: Gagal mendapatkan koneksi database.");
-                return;
-            }
+        // Panggil controller untuk list bulan
+        List<String> months = rekapController.getAvailableMonths(userId);
 
-            try (PreparedStatement ps = conn.prepareStatement(
-                    "SELECT DISTINCT DATE_FORMAT(tanggal, '%Y-%m') AS bulan FROM transaksi WHERE user_id = ? ORDER BY bulan DESC")) {
-                ps.setInt(1, userId);
-                try (ResultSet rs = ps.executeQuery()) {
-                    jP4MonthFilter.removeAllItems();
-                    jP4MonthFilter.addItem("Semua Bulan");
-                    while (rs.next()) {
-                        jP4MonthFilter.addItem(rs.getString("bulan"));
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Error di setupComboBox: " + e.getMessage());
+        // Render ke UI
+        jP4MonthFilter.removeAllItems();
+        for (String month : months) {
+            jP4MonthFilter.addItem(month);
         }
     }
 
     public void loadData(int userId, String bulan) {
-        try (Connection conn = bisnisku.app.connection.getKoneksi()) {
-            if (conn == null) {
-                System.out.println("Error: Gagal mendapatkan koneksi database.");
-                return;
-            }
+        // Minta data dari Controller
+        Map<String, Object> data = rekapController.getRekapData(userId, bulan);
 
-            // --- DEKLARASI VARIABEL UNTUK PERHITUNGAN SALDO ---
-            double modalAwal = 0;
-            double totalKeluar = 0;
-            double totalPemasukan = 0;
+        if (data.isEmpty()) {
+            return;
+        }
 
-            // 1. Ambil modal awal dari bisnis_profile
-            try (PreparedStatement ps = conn.prepareStatement(
-                    "SELECT modal_awal FROM bisnis_profile WHERE user_id = ?")) {
-                ps.setInt(1, userId);
-                try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) {
-                        modalAwal = rs.getDouble("modal_awal");
-                        jP4ModalAwal.setText("RP. " + String.format("%,.0f", modalAwal));
-                        System.out.println("Modal Awal: " + modalAwal);
-                    }
-                }
-            }
+        // 1. Terapkan Teks Label
+        jP4ModalAwal.setText((String) data.get("modalAwalStr"));
+        jP4Saldo.setText((String) data.get("saldoTotalStr"));
 
-            // 2. Ambil total Pengeluaran dari tabel transaksi
-            try (PreparedStatement ps = conn.prepareStatement(
-                    "SELECT COALESCE(SUM(nominal),0) AS total FROM transaksi WHERE user_id = ?")) {
-                ps.setInt(1, userId);
-                try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) {
-                        totalKeluar = rs.getDouble("total");
-                    }
-                }
-            }
+        // 2. Terapkan Warna Saldo
+        boolean isSaldoNegative = (boolean) data.get("isSaldoNegative");
+        if (isSaldoNegative) {
+            jP4Saldo.setForeground(new java.awt.Color(255, 123, 103)); // Merah untuk minus
+        } else {
+            jP4Saldo.setForeground(new java.awt.Color(30, 158, 117)); // Hijau untuk positif
+        }
 
-            // 3. Ambil total Pemasukan dari tabel pemasukan_harian
-            try (PreparedStatement ps = conn.prepareStatement(
-                    "SELECT COALESCE(SUM(total_pendapatan),0) AS total FROM pemasukan_harian WHERE id_user = ?")) {
-                ps.setInt(1, userId);
-                try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) {
-                        totalPemasukan = rs.getDouble("total");
-                    }
-                }
-            }
-
-            // 4. Hitung Saldo (Modal + Pemasukan - Pengeluaran) & Atur Warna Teks
-            double saldoTotal = modalAwal + totalPemasukan - totalKeluar;
-            jP4Saldo.setText("RP. " + String.format("%,.0f", saldoTotal));
-
-            if (saldoTotal < 0) {
-                jP4Saldo.setForeground(new java.awt.Color(255, 123, 103)); // Merah untuk minus
-            } else {
-                jP4Saldo.setForeground(new java.awt.Color(30, 158, 117)); // Hijau untuk positif
-            }
-
-            // 5. Ambil data untuk tabel berdasarkan filter bulan
-            String sql;
-            boolean isFilterBulan = (bulan != null && !bulan.equals("Semua Bulan"));
-
-            if (!isFilterBulan) {
-                // Group by Bulan dan Kategori (Hanya 2 parameter: userId, userId)
-                sql = "SELECT 'Pemasukan' AS kategori, SUM(total_pendapatan) AS total_nominal, "
-                        + "DATE_FORMAT(tanggal, '%Y-%m') AS bulan_transaksi "
-                        + "FROM pemasukan_harian WHERE id_user = ? "
-                        + "UNION ALL "
-                        + "SELECT kategori, SUM(nominal) AS total_nominal, "
-                        + "DATE_FORMAT(tanggal, '%Y-%m') AS bulan_transaksi "
-                        + "FROM transaksi WHERE user_id = ? "
-                        + "GROUP BY bulan_transaksi, kategori "
-                        + "ORDER BY bulan_transaksi DESC, total_nominal DESC";
-            } else {
-                // Group by Bulan dan Kategori, dengan filter bulan spesifik (4 parameter: userId, bulan, userId, bulan)
-                sql = "SELECT 'Pemasukan' AS kategori, SUM(total_pendapatan) AS total_nominal, "
-                        + "DATE_FORMAT(tanggal, '%Y-%m') AS bulan_transaksi "
-                        + "FROM pemasukan_harian WHERE id_user = ? AND DATE_FORMAT(tanggal, '%Y-%m') = ? "
-                        + "UNION ALL "
-                        + "SELECT kategori, SUM(nominal) AS total_nominal, "
-                        + "DATE_FORMAT(tanggal, '%Y-%m') AS bulan_transaksi "
-                        + "FROM transaksi WHERE user_id = ? AND DATE_FORMAT(tanggal, '%Y-%m') = ? "
-                        + "GROUP BY bulan_transaksi, kategori "
-                        + "ORDER BY total_nominal DESC";
-            }
-
-            try (PreparedStatement ps = conn.prepareStatement(sql)) {
-
-                // Set parameter sesuai kondisi query di atas
-                if (!isFilterBulan) {
-                    ps.setInt(1, userId);
-                    ps.setInt(2, userId);
-                } else {
-                    ps.setInt(1, userId);
-                    ps.setString(2, bulan);
-                    ps.setInt(3, userId);
-                    ps.setString(4, bulan);
-                }
-
-                try (ResultSet rs = ps.executeQuery()) {
-                    // Tambahkan kolom "Bulan" ke dalam DefaultTableModel
-                    javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(
-                            new String[]{"Kategori", "Total Nominal", "Bulan"}, 0);
-
-                    while (rs.next()) {
-                        model.addRow(new Object[]{
-                            rs.getString("kategori"),
-                            "RP. " + String.format("%,.0f", rs.getDouble("total_nominal")),
-                            rs.getString("bulan_transaksi") // Ambil data alias bulan_transaksi dari SQL
-                        });
-                    }
-                    jP4Table.setModel(model);
-                }
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Error di loadData: " + e.getMessage());
-            e.printStackTrace(); // Tambahkan ini agar lebih mudah di-debug jika ada error lain
+        // 3. Terapkan Data Tabel
+        DefaultTableModel model = (DefaultTableModel) data.get("tableModel");
+        if (model != null) {
+            jP4Table.setModel(model);
         }
     }
 
