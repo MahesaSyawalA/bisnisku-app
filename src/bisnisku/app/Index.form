@@ -129,7 +129,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/bisnisku/app/logobinikuuu.png"/>
+                  <Image iconType="3" name="/bisnisku/app/assets/logobinikuuu.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Bisnisku"/>
               </Properties>
@@ -567,7 +567,7 @@
                               </Group>
                               <Component id="jScrollPane4" alignment="0" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="311" max="32767" attributes="0"/>
+                          <EmptySpace pref="50" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1124,9 +1124,6 @@
                           <Dimension value="[176, 32]"/>
                         </Property>
                       </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jP2NameExpenseFieldActionPerformed"/>
-                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -1201,9 +1198,6 @@
                           <Dimension value="[176, 32]"/>
                         </Property>
                       </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jP2NominalFieldActionPerformed"/>
-                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -1354,9 +1348,6 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Batal"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jP2Button2ActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel2">
                   <Properties>
@@ -2103,7 +2094,7 @@
                       <Color blue="97" green="9b" red="9b" type="rgb"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/bisnisku/app/BisniskuPemasukan.png"/>
+                      <Image iconType="3" name="/bisnisku/app/assets/BisniskuPemasukan.png"/>
                     </Property>
                   </Properties>
                 </Component>
@@ -2193,7 +2184,6 @@
                       </Properties>
                       <Events>
                         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="finishButtonPemasukanMouseClicked"/>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="finishButtonPemasukanActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -2213,7 +2203,6 @@
                   </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tapButtonPemasukanMouseClicked"/>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tapButtonPemasukanActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="plusIconPemasukan">
@@ -2316,11 +2305,11 @@
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace pref="289" max="32767" attributes="0"/>
+                          <EmptySpace pref="34" max="32767" attributes="0"/>
                       </Group>
                       <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="625" max="32767" attributes="0"/>
+                              <EmptySpace pref="370" max="32767" attributes="0"/>
                               <Component id="jLabel14" min="-2" pref="100" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                           </Group>
@@ -2411,7 +2400,6 @@
                   </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP6ShowLeaderboardButtonMouseClicked"/>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jP6ShowLeaderboardButtonActionPerformed"/>
                   </Events>
                 </Component>
                 <Container class="javax.swing.JPanel" name="jPanel31">
@@ -2713,21 +2701,21 @@
                 <Component class="javax.swing.JLabel" name="jgambar2">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/bisnisku/app/aiFoto.png"/>
+                      <Image iconType="3" name="/bisnisku/app/assets/aiFoto.png"/>
                     </Property>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jgambar1">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/bisnisku/app/aiFoto.png"/>
+                      <Image iconType="3" name="/bisnisku/app/assets/aiFoto.png"/>
                     </Property>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jgambar3">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/bisnisku/app/aiFoto.png"/>
+                      <Image iconType="3" name="/bisnisku/app/assets/aiFoto.png"/>
                     </Property>
                   </Properties>
                 </Component>

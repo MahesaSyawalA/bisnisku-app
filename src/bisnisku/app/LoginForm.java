@@ -93,7 +93,7 @@ public class LoginForm extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Poppins Medium", 1, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bisnisku/app/logobinikuuu.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bisnisku/app/assets/logobinikuuu.png"))); // NOI18N
         jLabel1.setText("Bisnisku Tycoon");
 
         jPanel2.setBackground(new java.awt.Color(48, 48, 46));

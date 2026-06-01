@@ -4,6 +4,7 @@
  */
 package bisnisku.app;
 
+import bisnisku.app.controllers.TrackYourExpensesController;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -362,7 +363,7 @@ public class Index extends javax.swing.JFrame {
 
         jTitle.setFont(new java.awt.Font("Poppins Medium", 1, 20)); // NOI18N
         jTitle.setForeground(new java.awt.Color(255, 255, 255));
-        jTitle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bisnisku/app/logobinikuuu.png"))); // NOI18N
+        jTitle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bisnisku/app/assets/logobinikuuu.png"))); // NOI18N
         jTitle.setText("Bisnisku");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -737,7 +738,7 @@ public class Index extends javax.swing.JFrame {
                         .addGap(30, 30, 30)
                         .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane4))
-                .addContainerGap(311, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -868,11 +869,6 @@ public class Index extends javax.swing.JFrame {
         jP2NameExpenseField.setText("Contoh: Beli biji Kopi 10kg");
         jP2NameExpenseField.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), javax.swing.BorderFactory.createEmptyBorder(4, 4, 4, 4)));
         jP2NameExpenseField.setPreferredSize(new java.awt.Dimension(176, 32));
-        jP2NameExpenseField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jP2NameExpenseFieldActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -904,11 +900,6 @@ public class Index extends javax.swing.JFrame {
         jP2NominalField.setText("Contoh: 850000");
         jP2NominalField.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), javax.swing.BorderFactory.createEmptyBorder(4, 4, 4, 4)));
         jP2NominalField.setPreferredSize(new java.awt.Dimension(176, 32));
-        jP2NominalField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jP2NominalFieldActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
         jPanel20.setLayout(jPanel20Layout);
@@ -996,11 +987,6 @@ public class Index extends javax.swing.JFrame {
         jP2Button2.setFont(new java.awt.Font("Poppins SemiBold", 0, 15)); // NOI18N
         jP2Button2.setForeground(new java.awt.Color(204, 204, 204));
         jP2Button2.setText("Batal");
-        jP2Button2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jP2Button2ActionPerformed(evt);
-            }
-        });
 
         jLabel2.setFont(new java.awt.Font("Poppins Medium", 0, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(204, 204, 204));
@@ -1409,7 +1395,7 @@ public class Index extends javax.swing.JFrame {
 
         jgambar.setFont(new java.awt.Font("Poppins Light", 1, 12)); // NOI18N
         jgambar.setForeground(new java.awt.Color(155, 155, 151));
-        jgambar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bisnisku/app/BisniskuPemasukan.png"))); // NOI18N
+        jgambar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bisnisku/app/assets/BisniskuPemasukan.png"))); // NOI18N
 
         jPanel12.setBackground(new java.awt.Color(38, 38, 37));
 
@@ -1428,11 +1414,6 @@ public class Index extends javax.swing.JFrame {
         finishButtonPemasukan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 finishButtonPemasukanMouseClicked(evt);
-            }
-        });
-        finishButtonPemasukan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                finishButtonPemasukanActionPerformed(evt);
             }
         });
 
@@ -1476,11 +1457,6 @@ public class Index extends javax.swing.JFrame {
         tapButtonPemasukan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tapButtonPemasukanMouseClicked(evt);
-            }
-        });
-        tapButtonPemasukan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tapButtonPemasukanActionPerformed(evt);
             }
         });
 
@@ -1561,11 +1537,6 @@ public class Index extends javax.swing.JFrame {
         jP6ShowLeaderboardButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jP6ShowLeaderboardButtonMouseClicked(evt);
-            }
-        });
-        jP6ShowLeaderboardButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jP6ShowLeaderboardButtonActionPerformed(evt);
             }
         });
 
@@ -1744,11 +1715,11 @@ public class Index extends javax.swing.JFrame {
         jP6LeaderboardTable.setSelectionForeground(new java.awt.Color(51, 51, 51));
         jScrollPane6.setViewportView(jP6LeaderboardTable);
 
-        jgambar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bisnisku/app/aiFoto.png"))); // NOI18N
+        jgambar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bisnisku/app/assets/aiFoto.png"))); // NOI18N
 
-        jgambar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bisnisku/app/aiFoto.png"))); // NOI18N
+        jgambar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bisnisku/app/assets/aiFoto.png"))); // NOI18N
 
-        jgambar3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bisnisku/app/aiFoto.png"))); // NOI18N
+        jgambar3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bisnisku/app/assets/aiFoto.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel30Layout = new javax.swing.GroupLayout(jPanel30);
         jPanel30.setLayout(jPanel30Layout);
@@ -1786,10 +1757,10 @@ public class Index extends javax.swing.JFrame {
                             .addGroup(jPanel30Layout.createSequentialGroup()
                                 .addGap(28, 28, 28)
                                 .addComponent(jgambar3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(289, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
             .addGroup(jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel30Layout.createSequentialGroup()
-                    .addContainerGap(625, Short.MAX_VALUE)
+                    .addContainerGap(370, Short.MAX_VALUE)
                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(45, 45, 45)))
         );
@@ -1925,14 +1896,6 @@ public class Index extends javax.swing.JFrame {
         // TODO add your handling code here:
         updateFilterData();
     }//GEN-LAST:event_jP3CheckAllMonthActionPerformed
-
-    private void jP2NameExpenseFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jP2NameExpenseFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jP2NameExpenseFieldActionPerformed
-
-    private void jP2NominalFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jP2NominalFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jP2NominalFieldActionPerformed
 
     //Coding Kebuthan jP 1 Dashboard  
     public void jP1loadData(int userId) {
@@ -2180,18 +2143,6 @@ public class Index extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jP2Button1ActionPerformed
 
-    private void jP2Button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jP2Button2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jP2Button2ActionPerformed
-
-    private void finishButtonPemasukanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finishButtonPemasukanActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_finishButtonPemasukanActionPerformed
-
-    private void tapButtonPemasukanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tapButtonPemasukanActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tapButtonPemasukanActionPerformed
-
     private void tabPemasukanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabPemasukanMouseClicked
         // TODO add your handling code here:
         switchTab(jP5, tabPemasukan);
@@ -2311,10 +2262,6 @@ public class Index extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "Gagal memuat Leaderboard: " + e.getMessage());
         }
     }//GEN-LAST:event_jP6ShowLeaderboardButtonMouseClicked
-
-    private void jP6ShowLeaderboardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jP6ShowLeaderboardButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jP6ShowLeaderboardButtonActionPerformed
 
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
         // TODO add your handling code here:

@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package bisnisku.app;
+package bisnisku.app.controllers;
 
+import bisnisku.app.UserSession;
+import bisnisku.app.connection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +27,7 @@ public class TrackYourExpensesController {
 
         String sql = "INSERT INTO transaksi (user_id, nama, nominal, kategori, tanggal) VALUES (?,?, ?, ?, ?)";
 
-        try (PreparedStatement ps = conn.con.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.getConnection().prepareStatement(sql)) {
 
             int userId = UserSession.getUserId();
             System.out.println(userId);
@@ -51,8 +53,7 @@ public class TrackYourExpensesController {
 
         String sql = "SELECT nama, nominal, kategori FROM transaksi WHERE user_id = ? ORDER BY id DESC LIMIT 10";
 
-        try (PreparedStatement ps = conn.con.prepareStatement(sql)) {
-
+        try (PreparedStatement ps = conn.getConnection().prepareStatement(sql)) {
             System.out.println(userId);
 
             ps.setInt(1, userId);

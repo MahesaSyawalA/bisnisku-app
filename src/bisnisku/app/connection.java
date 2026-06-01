@@ -28,7 +28,7 @@ public class connection {
         try {
             Class.forName(driver).newInstance();
             con = DriverManager.getConnection(url, id, pass);
-            if (con != null) {  
+            if (con != null) {
 //                System.out.println("Koneksi berhasil");
             } else {
                 System.out.println("Koneksi Gagal");
@@ -55,6 +55,10 @@ public class connection {
             System.out.println("Koneksi Gagal: " + e.getMessage());
         }
         return con; // Sekarang return ini valid karena ini method, bukan constructor
+    }
+
+    public Connection getConnection() {
+        return con;
     }
 
     public static void main(String[] args) {

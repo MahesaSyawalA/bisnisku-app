@@ -105,7 +105,7 @@ public class RegisterForm extends javax.swing.JFrame {
 
         jTitle.setFont(new java.awt.Font("Poppins Medium", 1, 20)); // NOI18N
         jTitle.setForeground(new java.awt.Color(255, 255, 255));
-        jTitle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bisnisku/app/logobinikuuu.png"))); // NOI18N
+        jTitle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bisnisku/app/assets/logobinikuuu.png"))); // NOI18N
         jTitle.setText("Bisnisku tycoon");
 
         jPanel2.setBackground(new java.awt.Color(49, 49, 47));
