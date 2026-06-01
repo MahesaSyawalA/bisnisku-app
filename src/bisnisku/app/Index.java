@@ -2594,8 +2594,10 @@ public class Index extends javax.swing.JFrame {
 
             // 5. Ambil data untuk tabel berdasarkan filter bulan
             String sql;
-            if (bulan == null || bulan.equals("Semua Bulan")) {
-                // Group by Bulan dan Kategori
+            boolean isFilterBulan = (bulan != null && !bulan.equals("Semua Bulan"));
+
+            if (!isFilterBulan) {
+                // Group by Bulan dan Kategori (Hanya 2 parameter: userId, userId)
                 sql = "SELECT 'Pemasukan' AS kategori, SUM(total_pendapatan) AS total_nominal, "
                         + "DATE_FORMAT(tanggal, '%Y-%m') AS bulan_transaksi "
                         + "FROM pemasukan_harian WHERE id_user = ? "
@@ -2606,7 +2608,7 @@ public class Index extends javax.swing.JFrame {
                         + "GROUP BY bulan_transaksi, kategori "
                         + "ORDER BY bulan_transaksi DESC, total_nominal DESC";
             } else {
-                // Group by Bulan dan Kategori, dengan filter bulan spesifik
+                // Group by Bulan dan Kategori, dengan filter bulan spesifik (4 parameter: userId, bulan, userId, bulan)
                 sql = "SELECT 'Pemasukan' AS kategori, SUM(total_pendapatan) AS total_nominal, "
                         + "DATE_FORMAT(tanggal, '%Y-%m') AS bulan_transaksi "
                         + "FROM pemasukan_harian WHERE id_user = ? AND DATE_FORMAT(tanggal, '%Y-%m') = ? "
@@ -2619,13 +2621,16 @@ public class Index extends javax.swing.JFrame {
             }
 
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setInt(1, userId);
-                ps.setString(2, bulan);
-                ps.setInt(3, userId);   // tambah ini
-                ps.setString(4, bulan); // tambah ini
 
-                if (bulan != null && !bulan.equals("Semua Bulan")) {
+                // Set parameter sesuai kondisi query di atas
+                if (!isFilterBulan) {
+                    ps.setInt(1, userId);
+                    ps.setInt(2, userId);
+                } else {
+                    ps.setInt(1, userId);
                     ps.setString(2, bulan);
+                    ps.setInt(3, userId);
+                    ps.setString(4, bulan);
                 }
 
                 try (ResultSet rs = ps.executeQuery()) {
@@ -2646,6 +2651,7 @@ public class Index extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             System.out.println("Error di loadData: " + e.getMessage());
+            e.printStackTrace(); // Tambahkan ini agar lebih mudah di-debug jika ada error lain
         }
     }
 
