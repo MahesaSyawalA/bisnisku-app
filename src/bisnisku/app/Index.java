@@ -50,6 +50,10 @@ public class Index extends javax.swing.JFrame {
 
     private void refreshTableJp2() {
         jP2Table1.setModel(controller.getModelTransaksi());
+
+        jP2Table1.getColumnModel().getColumn(0).setMinWidth(0);
+        jP2Table1.getColumnModel().getColumn(0).setMaxWidth(0);
+        jP2Table1.getColumnModel().getColumn(0).setWidth(0);
     }
 
     private void switchTab(javax.swing.JComponent panelAktif, javax.swing.JComponent tabAktif) {
@@ -125,6 +129,36 @@ public class Index extends javax.swing.JFrame {
         });
         conn = new connection();
         this.controller = new TrackYourExpensesController();
+        jP2Table1.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = jP2Table1.getSelectedRow();
+
+                if (row != -1) {
+                    int id = Integer.parseInt(jP2Table1.getValueAt(row, 0).toString());
+                    String nama = jP2Table1.getValueAt(row, 1).toString();
+
+                    int confirm = javax.swing.JOptionPane.showConfirmDialog(
+                            null,
+                            "Yakin ingin menghapus transaksi: " + nama + "?",
+                            "Konfirmasi Hapus",
+                            javax.swing.JOptionPane.YES_NO_OPTION
+                    );
+
+                    if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+                        boolean berhasil = controller.deleteTransaksi(id);
+
+                        if (berhasil) {
+                            javax.swing.JOptionPane.showMessageDialog(null, "Data berhasil dihapus!");
+                            refreshTableJp2();
+                        } else {
+                            javax.swing.JOptionPane.showMessageDialog(null, "Data gagal dihapus!");
+                        }
+                    }
+                }
+            }
+        });
+        
         this.dashboardController = new DashboardController();
         this.rekapController = new RekapController();
         this.incomeController = new IncomeController();
@@ -393,7 +427,7 @@ public class Index extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jTitle)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -870,6 +904,7 @@ public class Index extends javax.swing.JFrame {
         jP3.setViewportView(jPanel19);
 
         jPanel18.setBackground(new java.awt.Color(48, 48, 46));
+        jPanel18.setForeground(new java.awt.Color(255, 255, 255));
         jPanel18.setMaximumSize(new java.awt.Dimension(515, 32767));
         jPanel18.setPreferredSize(new java.awt.Dimension(515, 893));
 
@@ -1014,6 +1049,7 @@ public class Index extends javax.swing.JFrame {
 
         jP2Table1.setBackground(new java.awt.Color(48, 48, 46));
         jP2Table1.setFont(new java.awt.Font("Poppins Medium", 0, 13)); // NOI18N
+        jP2Table1.setForeground(new java.awt.Color(255, 255, 255));
         jP2Table1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -1889,6 +1925,7 @@ public class Index extends javax.swing.JFrame {
 
     private void tabTransaksiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabTransaksiMouseClicked
         // TODO add your handling code here:
+        refreshTableJp2();
         switchTab(jP2, tabTransaksi);
     }//GEN-LAST:event_tabTransaksiMouseClicked
 

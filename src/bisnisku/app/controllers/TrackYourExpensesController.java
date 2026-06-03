@@ -47,33 +47,49 @@ public class TrackYourExpensesController {
     }
 
     public DefaultTableModel getModelTransaksi() {
-        String[] kolom = {"Nama", "Nominal", "Kategori"};
+        String[] kolom = {"ID", "Nama", "Nominal", "Kategori"};
         DefaultTableModel model = new DefaultTableModel(null, kolom);
         int userId = UserSession.getUserId();
 
-        String sql = "SELECT nama, nominal, kategori FROM transaksi WHERE user_id = ? ORDER BY id DESC LIMIT 10";
+        String sql = "SELECT id, nama, nominal, kategori FROM transaksi WHERE user_id = ? ORDER BY id DESC LIMIT 10";
 
         try (PreparedStatement ps = conn.getConnection().prepareStatement(sql)) {
-            System.out.println(userId);
-
             ps.setInt(1, userId);
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
+                    int id = rs.getInt("id");
                     String nm = rs.getString("nama");
-
-                    // Format mata uang Rupiah
                     String nom = "Rp " + String.format("%,.0f", rs.getDouble("nominal"));
                     String ktg = rs.getString("kategori");
 
-                    model.addRow(new Object[]{nm, nom, ktg});
+                    model.addRow(new Object[]{id, nm, nom, ktg});
                 }
             }
 
         } catch (Exception e) {
             System.err.println("Error Select: " + e.getMessage());
         }
+
         return model;
+    }
+
+    public boolean deleteTransaksi(int id) {
+        String sql = "DELETE FROM transaksi WHERE id = ? AND user_id = ?";
+
+        try (PreparedStatement ps = conn.getConnection().prepareStatement(sql)) {
+
+            int userId = UserSession.getUserId();
+
+            ps.setInt(1, id);
+            ps.setInt(2, userId);
+
+            return ps.executeUpdate() > 0;
+
+        } catch (Exception e) {
+            System.err.println("Error Delete: " + e.getMessage());
+            return false;
+        }
     }
 
 }
