@@ -10,6 +10,7 @@ import bisnisku.app.controllers.CategoryController;
 import bisnisku.app.controllers.RekapController;
 import bisnisku.app.controllers.IncomeController;
 import bisnisku.app.controllers.LeaderboardController;
+import java.io.IOException;
 
 import java.util.List;
 
@@ -20,7 +21,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 
 /**
  *
@@ -45,7 +52,8 @@ public class Index extends javax.swing.JFrame {
 
     //kebutuhan Tab Pemasukan
     private long totalSaldo = 0;
-    private long nilaiPerTap = 5000;
+    private long totalKlik = 0;
+    private long nilaiPerTap = 5;
     private javax.swing.Timer animTimer;
     private int startY1 = -1;
     private int startY2 = -1;
@@ -326,6 +334,7 @@ public class Index extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jP4Table = new javax.swing.JTable();
         jP4MonthFilter = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
         jP3 = new javax.swing.JScrollPane();
         jPanel19 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -442,7 +451,7 @@ public class Index extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jTitle)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -790,23 +799,32 @@ public class Index extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Export ke PDF");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
         jPanel15Layout.setHorizontalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel6)
-                    .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jP4MonthFilter, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane4))
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel6)
+                        .addGroup(jPanel15Layout.createSequentialGroup()
+                            .addComponent(jLabel10)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jP4MonthFilter, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel15Layout.createSequentialGroup()
+                            .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(30, 30, 30)
+                            .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane4)))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
         jPanel15Layout.setVerticalGroup(
@@ -816,7 +834,7 @@ public class Index extends javax.swing.JFrame {
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jP4MonthFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -824,7 +842,9 @@ public class Index extends javax.swing.JFrame {
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         jP4.setViewportView(jPanel15);
@@ -930,14 +950,12 @@ public class Index extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(48, 48, 46));
 
         jLabel4.setFont(new java.awt.Font("Poppins Medium", 0, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(204, 204, 204));
         jLabel4.setText("Nama Pengeluaran");
 
         jP2NameExpenseField.setBackground(new java.awt.Color(48, 48, 46));
         jP2NameExpenseField.setFont(new java.awt.Font("Poppins Medium", 0, 13)); // NOI18N
-        jP2NameExpenseField.setForeground(new java.awt.Color(204, 204, 204));
         jP2NameExpenseField.setText("Contoh: Beli biji Kopi 10kg");
-        jP2NameExpenseField.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), javax.swing.BorderFactory.createEmptyBorder(4, 4, 4, 4)));
+        jP2NameExpenseField.setBorder(javax.swing.BorderFactory.createCompoundBorder(null, javax.swing.BorderFactory.createEmptyBorder(4, 4, 4, 4)));
         jP2NameExpenseField.setPreferredSize(new java.awt.Dimension(176, 32));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -961,14 +979,12 @@ public class Index extends javax.swing.JFrame {
         jPanel20.setBackground(new java.awt.Color(48, 48, 46));
 
         jLabel7.setFont(new java.awt.Font("Poppins Medium", 0, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(204, 204, 204));
         jLabel7.setText("Nominal (Rp)");
 
         jP2NominalField.setBackground(new java.awt.Color(48, 48, 46));
         jP2NominalField.setFont(new java.awt.Font("Poppins Medium", 0, 13)); // NOI18N
-        jP2NominalField.setForeground(new java.awt.Color(204, 204, 204));
         jP2NominalField.setText("Contoh: 850000");
-        jP2NominalField.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), javax.swing.BorderFactory.createEmptyBorder(4, 4, 4, 4)));
+        jP2NominalField.setBorder(javax.swing.BorderFactory.createCompoundBorder(null, javax.swing.BorderFactory.createEmptyBorder(4, 4, 4, 4)));
         jP2NominalField.setPreferredSize(new java.awt.Dimension(176, 32));
 
         javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
@@ -992,12 +1008,10 @@ public class Index extends javax.swing.JFrame {
         jPanel8.setBackground(new java.awt.Color(48, 48, 46));
 
         jLabel8.setFont(new java.awt.Font("Poppins Medium", 0, 12)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(204, 204, 204));
         jLabel8.setText("Kategori");
 
         jP2CategoryDropdown.setBackground(new java.awt.Color(48, 48, 46));
         jP2CategoryDropdown.setFont(new java.awt.Font("Poppins Medium", 0, 13)); // NOI18N
-        jP2CategoryDropdown.setForeground(new java.awt.Color(204, 204, 204));
         jP2CategoryDropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Operasional", "Gaji Karyawan", "Utilitas", "Gaya Hidup", "Lain-lain" }));
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -1020,11 +1034,9 @@ public class Index extends javax.swing.JFrame {
         jPanel9.setBackground(new java.awt.Color(48, 48, 46));
 
         jLabel9.setFont(new java.awt.Font("Poppins Medium", 0, 12)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(204, 204, 204));
         jLabel9.setText("Tanggal");
 
         jP2DateChooser1.setBackground(new java.awt.Color(48, 48, 46));
-        jP2DateChooser1.setForeground(new java.awt.Color(204, 204, 204));
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -1045,7 +1057,6 @@ public class Index extends javax.swing.JFrame {
 
         jP2Button1.setBackground(new java.awt.Color(48, 48, 46));
         jP2Button1.setFont(new java.awt.Font("Poppins SemiBold", 0, 15)); // NOI18N
-        jP2Button1.setForeground(new java.awt.Color(204, 204, 204));
         jP2Button1.setText("Simpan");
         jP2Button1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1055,11 +1066,9 @@ public class Index extends javax.swing.JFrame {
 
         jP2Button2.setBackground(new java.awt.Color(48, 48, 46));
         jP2Button2.setFont(new java.awt.Font("Poppins SemiBold", 0, 15)); // NOI18N
-        jP2Button2.setForeground(new java.awt.Color(204, 204, 204));
         jP2Button2.setText("Batal");
 
         jLabel2.setFont(new java.awt.Font("Poppins Medium", 0, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
         jLabel2.setText("Terakhir dicatat");
 
         jP2Table1.setBackground(new java.awt.Color(48, 48, 46));
@@ -1480,7 +1489,6 @@ public class Index extends javax.swing.JFrame {
 
         finishButtonPemasukan.setBackground(new java.awt.Color(38, 38, 37));
         finishButtonPemasukan.setFont(new java.awt.Font("Poppins Medium", 0, 12)); // NOI18N
-        finishButtonPemasukan.setForeground(new java.awt.Color(204, 204, 204));
         finishButtonPemasukan.setText("selesaikan hari ini");
         finishButtonPemasukan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1523,11 +1531,15 @@ public class Index extends javax.swing.JFrame {
 
         tapButtonPemasukan.setBackground(new java.awt.Color(49, 49, 47));
         tapButtonPemasukan.setFont(new java.awt.Font("Poppins Medium", 0, 12)); // NOI18N
-        tapButtonPemasukan.setForeground(new java.awt.Color(204, 204, 204));
         tapButtonPemasukan.setText("Tap Untuk Menjual");
         tapButtonPemasukan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tapButtonPemasukanMouseClicked(evt);
+            }
+        });
+        tapButtonPemasukan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tapButtonPemasukanActionPerformed(evt);
             }
         });
 
@@ -1561,7 +1573,7 @@ public class Index extends javax.swing.JFrame {
                                         .addComponent(jsubHead2)
                                         .addComponent(plusIconPemasukan, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(jsubHead, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1603,7 +1615,6 @@ public class Index extends javax.swing.JFrame {
 
         jP6ShowLeaderboardButton.setBackground(new java.awt.Color(38, 38, 37));
         jP6ShowLeaderboardButton.setFont(new java.awt.Font("Poppins Medium", 0, 12)); // NOI18N
-        jP6ShowLeaderboardButton.setForeground(new java.awt.Color(204, 204, 204));
         jP6ShowLeaderboardButton.setText("Lihat Leaderboard");
         jP6ShowLeaderboardButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1828,7 +1839,7 @@ public class Index extends javax.swing.JFrame {
                             .addGroup(jPanel30Layout.createSequentialGroup()
                                 .addGap(28, 28, 28)
                                 .addComponent(jgambar3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
             .addGroup(jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel30Layout.createSequentialGroup()
                     .addContainerGap(370, Short.MAX_VALUE)
@@ -2070,6 +2081,9 @@ public class Index extends javax.swing.JFrame {
 
     private void tapButtonPemasukanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tapButtonPemasukanMouseClicked
         // TODO add your handling code here:
+        totalKlik++;
+
+        nilaiPerTap = (long) (5 * Math.pow(1.1, totalKlik / 25.0));
         totalSaldo += nilaiPerTap;
         saldoPemasukan.setText(
                 "Rp. " + String.format("%,d", totalSaldo)
@@ -2151,6 +2165,151 @@ public class Index extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_logoutButtonMouseClicked
+
+    private void tapButtonPemasukanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tapButtonPemasukanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tapButtonPemasukanActionPerformed
+
+    private void drawTable(
+            PDPageContentStream content,
+            JTable table,
+            float startY,
+            float margin)
+            throws IOException {
+
+        float rowHeight = 25f;
+        float tableWidth = 500f;
+
+        int cols = table.getColumnCount();
+        int rows = table.getRowCount();
+
+        float colWidth = tableWidth / cols;
+
+        float y = startY;
+
+        //HEADER
+        for (int col = 0; col < cols; col++) {
+
+            float x = margin + (col * colWidth);
+
+            content.addRect(x, y, colWidth, rowHeight);
+
+            content.beginText();
+            content.newLineAtOffset(x + 5, y + 8);
+            content.showText(table.getColumnName(col));
+            content.endText();
+        }
+
+        content.stroke();
+
+        y -= rowHeight;
+
+        //DATA
+        for (int row = 0; row < rows; row++) {
+
+            for (int col = 0; col < cols; col++) {
+
+                float x = margin + (col * colWidth);
+
+                content.addRect(x, y, colWidth, rowHeight);
+
+                Object value
+                        = table.getValueAt(row, col);
+
+                String text
+                        = value == null
+                                ? ""
+                                : value.toString();
+
+                // Prevent text overflow
+                if (text.length() > 20) {
+                    text = text.substring(0, 17) + "...";
+                }
+
+                content.beginText();
+                content.newLineAtOffset(x + 5, y + 8);
+                content.showText(text);
+                content.endText();
+            }
+
+            content.stroke();
+
+            y -= rowHeight;
+        }
+    }
+
+    private void exportPDF() {
+        try {
+
+            PDDocument document = new PDDocument();
+
+            PDPage page = new PDPage();
+
+            document.addPage(page);
+
+            PDPageContentStream content
+                    = new PDPageContentStream(
+                            document,
+                            page);
+
+            content.setFont(
+                    new PDType1Font(
+                            Standard14Fonts.FontName.HELVETICA),
+                    10);
+
+            // ===== TITLE =====
+            content.beginText();
+            content.newLineAtOffset(220, 770);
+            content.showText("LAPORAN KEUANGAN");
+            content.endText();
+
+            // ===== SUMMARY =====
+            content.beginText();
+            content.newLineAtOffset(50, 730);
+            content.showText(
+                    "Modal Awal : "
+                    + jP4ModalAwal.getText());
+            content.endText();
+
+            content.beginText();
+            content.newLineAtOffset(50, 710);
+            content.showText(
+                    "Saldo Akhir : "
+                    + jP4Saldo.getText());
+            content.endText();
+
+            // ===== TABLE =====
+            drawTable(
+                    content,
+                    jP4Table,
+                    650,
+                    50);
+
+            content.close();
+
+            document.save("LaporanKeuangan.pdf");
+
+            document.close();
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "PDF berhasil dibuat!");
+
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    ex.getMessage());
+        }
+    }
+
+    //pdf export
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        exportPDF();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void setupCategoryComboBox() {
         // 1. Bersihkan item bawaan default ("Item 1", "Item 2", dst)
@@ -2294,6 +2453,7 @@ public class Index extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton finishButtonPemasukan;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jHeading1;
     private javax.swing.JLabel jHeading2;
     private javax.swing.JLabel jHeading3;
