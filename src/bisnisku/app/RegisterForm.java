@@ -19,7 +19,7 @@ public class RegisterForm extends javax.swing.JFrame {
      */
     public RegisterForm() {
         initComponents();
-        this.setTitle("Login - Bisnisku App");
+        this.setTitle("Bisnisku App - Register");
 
         try {
             java.awt.Image icon = java.awt.Toolkit.getDefaultToolkit().getImage(getClass().getResource("/bisnisku/app/assets/logobinikuuu.png"));
