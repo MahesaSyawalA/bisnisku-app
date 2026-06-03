@@ -41,6 +41,8 @@ public class Index extends javax.swing.JFrame {
     private final java.awt.Color WARNA_AKTIF = new java.awt.Color(204, 204, 204);
     private final java.awt.Color WARNA_TIDAK_AKTIF = new java.awt.Color(102, 102, 102);
 
+    String titleWindow = "Dashboard";
+
     //kebutuhan Tab Pemasukan
     private long totalSaldo = 0;
     private long nilaiPerTap = 5000;
@@ -56,7 +58,12 @@ public class Index extends javax.swing.JFrame {
         jP2Table1.getColumnModel().getColumn(0).setWidth(0);
     }
 
-    private void switchTab(javax.swing.JComponent panelAktif, javax.swing.JComponent tabAktif) {
+    // Tambahkan parameter String judulBaru
+    private void switchTab(javax.swing.JComponent panelAktif, javax.swing.JComponent tabAktif, String judulBaru) {
+
+        this.titleWindow = judulBaru;
+        this.setTitle("Bisnisku App - " + this.titleWindow);
+
         jP1.setVisible(false);
         jP2.setVisible(false);
         jP3.setVisible(false);
@@ -94,6 +101,14 @@ public class Index extends javax.swing.JFrame {
         int userId = UserSession.getUserId();
 
         initComponents();
+        this.setTitle("Bisnisku App - " + titleWindow);
+        try {
+            java.awt.Image icon = java.awt.Toolkit.getDefaultToolkit().getImage(getClass().getResource("/bisnisku/app/assets/logobinikuuu.png"));
+            this.setIconImage(icon);
+        } catch (Exception e) {
+            System.out.println("Gambar icon gagal dimuat: " + e.getMessage());
+        }
+
         // Clear placeholder Nama
         jP2NameExpenseField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent e) {
@@ -158,7 +173,7 @@ public class Index extends javax.swing.JFrame {
                 }
             }
         });
-        
+
         this.dashboardController = new DashboardController();
         this.rekapController = new RekapController();
         this.incomeController = new IncomeController();
@@ -1920,26 +1935,26 @@ public class Index extends javax.swing.JFrame {
         int userId = UserSession.getUserId();
         jP1loadData(userId);
 
-        switchTab(jP1, tabDashboard);
+        switchTab(jP1, tabDashboard, "Dashboard");
     }//GEN-LAST:event_tabDashboardMouseClicked
 
     private void tabTransaksiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabTransaksiMouseClicked
         // TODO add your handling code here:
         refreshTableJp2();
-        switchTab(jP2, tabTransaksi);
+        switchTab(jP2, tabTransaksi, "Transaksi");
     }//GEN-LAST:event_tabTransaksiMouseClicked
 
     private void tabKategoriMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabKategoriMouseClicked
         // TODO add your handling code here:
-        switchTab(jP3, tabKategori);
+        switchTab(jP3, tabKategori, "Kategori");
     }//GEN-LAST:event_tabKategoriMouseClicked
 
     private void tabRekapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabRekapMouseClicked
         // TODO add your handling code here:
         int userId = UserSession.getUserId();
-        setupComboBox();                        // refresh dropdown bulan
-        loadData(userId, "Semua Bulan");        // load data tabel
-        switchTab(jP4, tabRekap);
+        setupComboBox();
+        loadData(userId, "Semua Bulan");
+        switchTab(jP4, tabRekap, "Rekap");
     }//GEN-LAST:event_tabRekapMouseClicked
 
     private void jP4MonthFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jP4MonthFilterActionPerformed
@@ -2046,11 +2061,11 @@ public class Index extends javax.swing.JFrame {
 
     private void tabPemasukanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabPemasukanMouseClicked
         // TODO add your handling code here:
-        switchTab(jP5, tabPemasukan);
+        switchTab(jP5, tabPemasukan, "Pemasukan");
     }//GEN-LAST:event_tabPemasukanMouseClicked
 
     private void tabLeaderboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabLeaderboardMouseClicked
-        switchTab(jP6, tabLeaderboard);
+        switchTab(jP6, tabLeaderboard, "Leaderboard");
     }//GEN-LAST:event_tabLeaderboardMouseClicked
 
     private void tapButtonPemasukanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tapButtonPemasukanMouseClicked

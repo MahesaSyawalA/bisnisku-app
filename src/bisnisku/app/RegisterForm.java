@@ -19,6 +19,15 @@ public class RegisterForm extends javax.swing.JFrame {
      */
     public RegisterForm() {
         initComponents();
+        this.setTitle("Login - Bisnisku App");
+
+        try {
+            java.awt.Image icon = java.awt.Toolkit.getDefaultToolkit().getImage(getClass().getResource("/bisnisku/app/assets/logobinikuuu.png"));
+            this.setIconImage(icon);
+        } catch (Exception e) {
+            System.out.println("Gambar icon gagal dimuat: " + e.getMessage());
+        }
+        
         conn = new connection();
         // Clear placeholder Username
         jTextFieldUsername.addFocusListener(new java.awt.event.FocusAdapter() {
