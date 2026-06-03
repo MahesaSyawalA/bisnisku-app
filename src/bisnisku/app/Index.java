@@ -117,25 +117,24 @@ public class Index extends javax.swing.JFrame {
             System.out.println("Gambar icon gagal dimuat: " + e.getMessage());
         }
 
-        this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-
-        this.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                int confirm = javax.swing.JOptionPane.showConfirmDialog(
-                        Index.this, 
-                        "Apakah Anda yakin ingin keluar dari aplikasi?",
-                        "Konfirmasi Keluar",
-                        javax.swing.JOptionPane.YES_NO_OPTION,
-                        javax.swing.JOptionPane.QUESTION_MESSAGE
-                );
-
-                if (confirm == javax.swing.JOptionPane.YES_OPTION) {
-                    System.exit(0); 
-                }
-            }
-        });
-
+//        this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+//
+//        this.addWindowListener(new java.awt.event.WindowAdapter() {
+//            @Override
+//            public void windowClosing(java.awt.event.WindowEvent evt) {
+//                int confirm = javax.swing.JOptionPane.showConfirmDialog(
+//                        Index.this, 
+//                        "Apakah Anda yakin ingin keluar dari aplikasi?",
+//                        "Konfirmasi Keluar",
+//                        javax.swing.JOptionPane.YES_NO_OPTION,
+//                        javax.swing.JOptionPane.QUESTION_MESSAGE
+//                );
+//
+//                if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+//                    System.exit(0); 
+//                }
+//            }
+//        });
         // Clear placeholder Nama
         jP2NameExpenseField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent e) {
@@ -853,7 +852,7 @@ public class Index extends javax.swing.JFrame {
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jP4MonthFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -863,7 +862,7 @@ public class Index extends javax.swing.JFrame {
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jP4.setViewportView(jPanel15);
@@ -974,7 +973,7 @@ public class Index extends javax.swing.JFrame {
         jP2NameExpenseField.setBackground(new java.awt.Color(48, 48, 46));
         jP2NameExpenseField.setFont(new java.awt.Font("Poppins Medium", 0, 13)); // NOI18N
         jP2NameExpenseField.setText("Contoh: Beli biji Kopi 10kg");
-        jP2NameExpenseField.setBorder(javax.swing.BorderFactory.createCompoundBorder(null, javax.swing.BorderFactory.createEmptyBorder(4, 4, 4, 4)));
+        jP2NameExpenseField.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), javax.swing.BorderFactory.createEmptyBorder(4, 4, 4, 4)));
         jP2NameExpenseField.setPreferredSize(new java.awt.Dimension(176, 32));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -1003,7 +1002,7 @@ public class Index extends javax.swing.JFrame {
         jP2NominalField.setBackground(new java.awt.Color(48, 48, 46));
         jP2NominalField.setFont(new java.awt.Font("Poppins Medium", 0, 13)); // NOI18N
         jP2NominalField.setText("Contoh: 850000");
-        jP2NominalField.setBorder(javax.swing.BorderFactory.createCompoundBorder(null, javax.swing.BorderFactory.createEmptyBorder(4, 4, 4, 4)));
+        jP2NominalField.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), javax.swing.BorderFactory.createEmptyBorder(4, 4, 4, 4)));
         jP2NominalField.setPreferredSize(new java.awt.Dimension(176, 32));
 
         javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
@@ -1168,7 +1167,9 @@ public class Index extends javax.swing.JFrame {
 
         jP1level.setFont(new java.awt.Font("Poppins Medium", 1, 18)); // NOI18N
         jP1level.setForeground(new java.awt.Color(60, 114, 89));
+        jP1level.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jP1level.setText("Level: Pengusaha sehat");
+        jP1level.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
         jP1levelDesc.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
         jP1levelDesc.setForeground(new java.awt.Color(60, 114, 89));
@@ -2046,6 +2047,28 @@ public class Index extends javax.swing.JFrame {
             case 3:
                 levelPanel.setBackground(new java.awt.Color(255, 220, 220));
                 break;
+        }
+
+        String iconPath = (String) data.get("iconPath");
+
+        jP1level.setIcon(null); 
+
+        if (iconPath != null) {
+            try {
+                java.net.URL imgURL = getClass().getResource(iconPath);
+
+                if (imgURL != null) {
+                    java.awt.Image img = java.awt.Toolkit.getDefaultToolkit().getImage(imgURL);
+                    jP1level.setIcon(new javax.swing.ImageIcon(img));
+                    jP1level.setIconTextGap(8); 
+                    jP1level.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+                    jP1level.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+                } else {
+                    System.out.println("Path gambar salah / tidak terbaca: " + iconPath);
+                }
+            } catch (Exception e) {
+                System.out.println("Error saat pasang icon: " + e.getMessage());
+            }
         }
 
         // Mengatur Tabel

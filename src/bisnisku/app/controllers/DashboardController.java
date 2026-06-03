@@ -12,12 +12,12 @@ import javax.swing.table.DefaultTableModel;
 public class DashboardController {
 
     public Map<String, Object> getDashboardData(int userId) {
-        
+
         Map<String, Object> data = new HashMap<>();
 
         try (Connection conn = connection.getKoneksi()) {
             if (conn == null) {
-                return data; 
+                return data;
             }
 
             double modalAwal = 0;
@@ -46,7 +46,6 @@ public class DashboardController {
                 }
             }
 
-            
             String sqlMasuk = "SELECT COALESCE(SUM(total_pendapatan),0) AS total FROM pemasukan_harian WHERE id_user = ?";
             try (PreparedStatement ps = conn.prepareStatement(sqlMasuk)) {
                 ps.setInt(1, userId);
@@ -60,7 +59,7 @@ public class DashboardController {
             double saldoSaatIni = modalAwal + totalPemasukan - totalKeluar;
             double profit = totalPemasukan - totalKeluar;
             double persen = (modalAwal > 0) ? (saldoSaatIni / modalAwal) * 100 : 0;
-            
+
             data.put("namaBisnis", namaBisnis);
             data.put("modalAwalStr", "RP. " + String.format("%,.0f", modalAwal));
             data.put("totalKeluarStr", "RP. " + String.format("%,.0f", totalKeluar));
@@ -69,20 +68,25 @@ public class DashboardController {
             data.put("isSaldoNegative", saldoSaatIni < 0);
 
             int progressValue = (int) Math.min(persen, 100);
-            data.put("progressValue", Math.max(progressValue, 0)); 
+            data.put("progressValue", Math.max(progressValue, 0));
 
             if (profit > 0) {
-                data.put("levelText", "Level: Bisnis Berkembang 📈");
+                data.put("levelText", "Level: Bisnis Berkembang");
                 data.put("levelDescText", "Profit +" + String.format("%.1f", persen - 100) + "% dari modal awal");
-                data.put("levelStatus", 1); 
+                data.put("levelStatus", 1);
+                data.put("iconPath", "/bisnisku/app/assets/trending-up.png");
+
             } else if (persen >= 50) {
-                data.put("levelText", "Level: Perlu Waspada 📉");
+                data.put("levelText", "Level: Perlu Waspada");
                 data.put("levelDescText", "Saldo tersisa " + String.format("%.1f", persen) + "% dari modal");
-                data.put("levelStatus", 2); 
+                data.put("levelStatus", 2);
+                data.put("iconPath", "/bisnisku/app/assets/trending-down.png");
+
             } else {
-                data.put("levelText", "Level: Kondisi Kritis 🚨");
+                data.put("levelText", "Level: Kondisi Kritis");
                 data.put("levelDescText", "Kerugian bisnis mulai besar");
-                data.put("levelStatus", 3); 
+                data.put("levelStatus", 3);
+                data.put("iconPath", "/bisnisku/app/assets/siren.png");
             }
 
             String sqlTransaksiTerakhir = "SELECT nominal FROM transaksi WHERE user_id = ? ORDER BY id DESC LIMIT 1";
@@ -117,6 +121,6 @@ public class DashboardController {
             System.err.println("Error Loading Dashboard Data: " + e.getMessage());
         }
 
-        return data; 
+        return data;
     }
 }
