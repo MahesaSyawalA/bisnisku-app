@@ -31,6 +31,26 @@ public class LoginForm extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("Gambar icon gagal dimuat: " + e.getMessage());
         }
+        
+        // modal konfirmasi ketika keluar dari app         
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                int confirm = javax.swing.JOptionPane.showConfirmDialog(
+                        LoginForm.this, 
+                        "Apakah Anda yakin ingin keluar dari aplikasi?",
+                        "Konfirmasi Keluar",
+                        javax.swing.JOptionPane.YES_NO_OPTION,
+                        javax.swing.JOptionPane.QUESTION_MESSAGE
+                );
+
+                if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+                    System.exit(0); 
+                }
+            }
+        });
 
         conn = new connection();
         // Clear placeholder Username

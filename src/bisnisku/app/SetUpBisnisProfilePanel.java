@@ -25,7 +25,27 @@ public class SetUpBisnisProfilePanel extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("Gambar icon gagal dimuat: " + e.getMessage());
         }
-        
+
+        // modal konfirmasi ketika keluar dari app         
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                int confirm = javax.swing.JOptionPane.showConfirmDialog(
+                        SetUpBisnisProfilePanel.this,
+                        "Apakah Anda yakin ingin keluar dari aplikasi?",
+                        "Konfirmasi Keluar",
+                        javax.swing.JOptionPane.YES_NO_OPTION,
+                        javax.swing.JOptionPane.QUESTION_MESSAGE
+                );
+
+                if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
+            }
+        });
+
         conn = new connection();
         this.setLocationRelativeTo(null);
     }
@@ -239,16 +259,16 @@ public class SetUpBisnisProfilePanel extends javax.swing.JFrame {
 
             if (barisTerdampak > 0) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Profile bisnis berhasil disimpan!", "Sukses", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                    
+
                 UserSession.setUserId(userId);
                 UserSession.setNamaPemilik(namaPemilik);
                 UserSession.setNamaBisnis(namaBisnis);
                 UserSession.setModal(modalAwal);
-                
+
                 Index indexPage = new Index();
                 indexPage.setVisible(true);
-                
-                this.dispose(); 
+
+                this.dispose();
             }
 
         } catch (java.sql.SQLException e) {

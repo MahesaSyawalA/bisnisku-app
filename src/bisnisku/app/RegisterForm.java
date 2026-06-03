@@ -27,7 +27,27 @@ public class RegisterForm extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("Gambar icon gagal dimuat: " + e.getMessage());
         }
-        
+
+        // modal konfirmasi ketika keluar dari app         
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                int confirm = javax.swing.JOptionPane.showConfirmDialog(
+                        RegisterForm.this,
+                        "Apakah Anda yakin ingin keluar dari aplikasi?",
+                        "Konfirmasi Keluar",
+                        javax.swing.JOptionPane.YES_NO_OPTION,
+                        javax.swing.JOptionPane.QUESTION_MESSAGE
+                );
+
+                if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
+            }
+        });
+
         conn = new connection();
         // Clear placeholder Username
         jTextFieldUsername.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -37,6 +57,7 @@ public class RegisterForm extends javax.swing.JFrame {
                     jTextFieldUsername.setForeground(new java.awt.Color(204, 204, 204));
                 }
             }
+
             public void focusLost(java.awt.event.FocusEvent e) {
                 if (jTextFieldUsername.getText().isEmpty()) {
                     jTextFieldUsername.setText("Masukan Username");
@@ -53,6 +74,7 @@ public class RegisterForm extends javax.swing.JFrame {
                     jPasswordField1.setForeground(new java.awt.Color(204, 204, 204));
                 }
             }
+
             public void focusLost(java.awt.event.FocusEvent e) {
                 if (new String(jPasswordField1.getPassword()).isEmpty()) {
                     jPasswordField1.setText("jPasswordField1");
@@ -69,6 +91,7 @@ public class RegisterForm extends javax.swing.JFrame {
                     jPasswordField2.setForeground(new java.awt.Color(204, 204, 204));
                 }
             }
+
             public void focusLost(java.awt.event.FocusEvent e) {
                 if (new String(jPasswordField2.getPassword()).isEmpty()) {
                     jPasswordField2.setText("jPasswordField1");
@@ -76,7 +99,7 @@ public class RegisterForm extends javax.swing.JFrame {
                 }
             }
         });
-        
+
         this.setLocationRelativeTo(null);
     }
 
@@ -276,9 +299,9 @@ public class RegisterForm extends javax.swing.JFrame {
         String password = new String(jPasswordField1.getPassword());
         String konfirmasi = new String(jPasswordField2.getPassword());
 
-        if (username.isEmpty() || username.equals("Masukan Username") ||
-            password.isEmpty() || password.equals("jPasswordField1") ||
-            konfirmasi.isEmpty() || konfirmasi.equals("jPasswordField1")) {
+        if (username.isEmpty() || username.equals("Masukan Username")
+                || password.isEmpty() || password.equals("jPasswordField1")
+                || konfirmasi.isEmpty() || konfirmasi.equals("jPasswordField1")) {
             javax.swing.JOptionPane.showMessageDialog(this, "Semua kolom harus diisi ya!", "Peringatan", javax.swing.JOptionPane.WARNING_MESSAGE);
             return;
         }
