@@ -1,6 +1,6 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+     * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+     * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package bisnisku.app.controllers;
 
@@ -21,6 +21,58 @@ public class TrackYourExpensesController {
 
     public TrackYourExpensesController() {
         conn = new connection();
+    }
+
+    public boolean isSaldoCukup(double nominalPengeluaran) {
+        int userId = UserSession.getUserId();
+        double modalAwal = 0;
+        double totalPemasukan = 0;
+        double totalKeluar = 0;
+
+        try {
+            // 1. Ambil Modal Awal
+            String sqlModal = "SELECT modal_awal FROM bisnis_profile WHERE user_id = ?";
+            try (PreparedStatement ps = conn.getConnection().prepareStatement(sqlModal)) {
+                ps.setInt(1, userId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        modalAwal = rs.getDouble("modal_awal");
+                    }
+                }
+            }
+
+            // 2. Ambil Total Pemasukan
+            String sqlMasuk = "SELECT COALESCE(SUM(total_pendapatan),0) AS total FROM pemasukan_harian WHERE id_user = ?";
+            try (PreparedStatement ps = conn.getConnection().prepareStatement(sqlMasuk)) {
+                ps.setInt(1, userId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        totalPemasukan = rs.getDouble("total");
+                    }
+                }
+            }
+
+            // 3. Ambil Total Pengeluaran Saat Ini
+            String sqlKeluar = "SELECT COALESCE(SUM(nominal),0) AS total FROM transaksi WHERE user_id = ?";
+            try (PreparedStatement ps = conn.getConnection().prepareStatement(sqlKeluar)) {
+                ps.setInt(1, userId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        totalKeluar = rs.getDouble("total");
+                    }
+                }
+            }
+
+            // 4. Hitung Saldo dan Bandingkan
+            double saldoSaatIni = modalAwal + totalPemasukan - totalKeluar;
+
+            // Jika saldo saat ini lebih besar atau sama dengan nominal yang mau dikeluarkan, return true
+            return saldoSaatIni >= nominalPengeluaran;
+
+        } catch (Exception e) {
+            System.err.println("Error cek saldo: " + e.getMessage());
+            return false;
+        }
     }
 
     public boolean simpanTransaksi(String nama, double nominal, String kategori, java.sql.Date tanggal) {

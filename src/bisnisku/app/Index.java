@@ -117,24 +117,25 @@ public class Index extends javax.swing.JFrame {
             System.out.println("Gambar icon gagal dimuat: " + e.getMessage());
         }
 
-//        this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-//
-//        this.addWindowListener(new java.awt.event.WindowAdapter() {
-//            @Override
-//            public void windowClosing(java.awt.event.WindowEvent evt) {
-//                int confirm = javax.swing.JOptionPane.showConfirmDialog(
-//                        Index.this, 
-//                        "Apakah Anda yakin ingin keluar dari aplikasi?",
-//                        "Konfirmasi Keluar",
-//                        javax.swing.JOptionPane.YES_NO_OPTION,
-//                        javax.swing.JOptionPane.QUESTION_MESSAGE
-//                );
-//
-//                if (confirm == javax.swing.JOptionPane.YES_OPTION) {
-//                    System.exit(0); 
-//                }
-//            }
-//        });
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                int confirm = javax.swing.JOptionPane.showConfirmDialog(
+                        Index.this,
+                        "Apakah Anda yakin ingin keluar dari aplikasi?",
+                        "Konfirmasi Keluar",
+                        javax.swing.JOptionPane.YES_NO_OPTION,
+                        javax.swing.JOptionPane.QUESTION_MESSAGE
+                );
+
+                if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
+            }
+        });
+
         // Clear placeholder Nama
         jP2NameExpenseField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent e) {
@@ -2051,7 +2052,7 @@ public class Index extends javax.swing.JFrame {
 
         String iconPath = (String) data.get("iconPath");
 
-        jP1level.setIcon(null); 
+        jP1level.setIcon(null);
 
         if (iconPath != null) {
             try {
@@ -2060,7 +2061,7 @@ public class Index extends javax.swing.JFrame {
                 if (imgURL != null) {
                     java.awt.Image img = java.awt.Toolkit.getDefaultToolkit().getImage(imgURL);
                     jP1level.setIcon(new javax.swing.ImageIcon(img));
-                    jP1level.setIconTextGap(8); 
+                    jP1level.setIconTextGap(8);
                     jP1level.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
                     jP1level.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
                 } else {
@@ -2082,7 +2083,6 @@ public class Index extends javax.swing.JFrame {
     private void jP2Button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jP2Button1ActionPerformed
         // TODO add your handling code here:
         try {
-
             String nama = jP2NameExpenseField.getText();
             double nominal = Double.parseDouble(jP2NominalField.getText());
             String kategori = jP2CategoryDropdown.getSelectedItem().toString();
@@ -2094,6 +2094,16 @@ public class Index extends javax.swing.JFrame {
             }
             java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
+            if (!controller.isSaldoCukup(nominal)) {
+                javax.swing.JOptionPane.showMessageDialog(
+                        this,
+                        "Transaksi dibatalkan!\nSaldo Anda saat ini tidak mencukupi untuk pengeluaran ini.",
+                        "Peringatan Saldo Minus",
+                        javax.swing.JOptionPane.WARNING_MESSAGE
+                );
+                return; 
+            }
+
             boolean sukses = controller.simpanTransaksi(nama, nominal, kategori, sqlDate);
 
             if (sukses) {
@@ -2103,6 +2113,7 @@ public class Index extends javax.swing.JFrame {
                 jP2NameExpenseField.setText("");
                 jP2NominalField.setText("");
 
+                jP1loadData(UserSession.getUserId());
             } else {
                 javax.swing.JOptionPane.showMessageDialog(this, "Gagal menyimpan ke database.");
             }
