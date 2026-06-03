@@ -23,7 +23,7 @@ public class LoginForm extends javax.swing.JFrame {
      */
     public LoginForm() {
         initComponents();
-        this.setTitle("Login - Bisnisku App");
+        this.setTitle("Bisnisku App - Login");
 
         try {
             java.awt.Image icon = java.awt.Toolkit.getDefaultToolkit().getImage(getClass().getResource("/bisnisku/app/assets/logobinikuuu.png"));
