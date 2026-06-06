@@ -119,33 +119,32 @@ public class LoginForm extends javax.swing.JFrame {
         setBackground(new java.awt.Color(48, 48, 46));
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
-        jPanel1.setBackground(new java.awt.Color(38, 38, 36));
+        jPanel1.setBackground(new java.awt.Color(232, 240, 254));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 59, 57)));
 
         jLabel1.setFont(new java.awt.Font("Poppins Medium", 1, 20)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(53, 100, 155));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bisnisku/app/assets/logobinikuuu.png"))); // NOI18N
         jLabel1.setText("Bisnisku Tycoon");
 
-        jPanel2.setBackground(new java.awt.Color(48, 48, 46));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setFont(new java.awt.Font("Poppins Medium", 1, 22)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Masuk ke akun bisnis");
 
         jLabel3.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel3.setForeground(new java.awt.Color(53, 100, 155));
         jLabel3.setText("Kelola keuangan bisnis kamu ");
 
-        jPanel3.setBackground(new java.awt.Color(48, 48, 46));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel4.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel4.setForeground(new java.awt.Color(53, 100, 155));
         jLabel4.setText("Username");
 
-        usernameInput.setBackground(new java.awt.Color(48, 48, 46));
         usernameInput.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
-        usernameInput.setForeground(new java.awt.Color(204, 204, 204));
+        usernameInput.setForeground(new java.awt.Color(53, 100, 155));
         usernameInput.setText("Masukan username anda");
         usernameInput.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), javax.swing.BorderFactory.createEmptyBorder(4, 4, 4, 4)));
         usernameInput.addActionListener(this::usernameInputActionPerformed);
@@ -170,15 +169,14 @@ public class LoginForm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel4.setBackground(new java.awt.Color(48, 48, 46));
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel5.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel5.setForeground(new java.awt.Color(53, 100, 155));
         jLabel5.setText("Password");
 
-        passwordInput.setBackground(new java.awt.Color(48, 48, 46));
         passwordInput.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
-        passwordInput.setForeground(new java.awt.Color(204, 204, 204));
+        passwordInput.setForeground(new java.awt.Color(53, 100, 155));
         passwordInput.setText("jPasswordField1");
         passwordInput.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), javax.swing.BorderFactory.createEmptyBorder(4, 4, 4, 4)));
 
@@ -202,9 +200,8 @@ public class LoginForm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        submitButtonLogin.setBackground(new java.awt.Color(48, 48, 46));
         submitButtonLogin.setFont(new java.awt.Font("Poppins SemiBold", 0, 18)); // NOI18N
-        submitButtonLogin.setForeground(new java.awt.Color(255, 255, 255));
+        submitButtonLogin.setForeground(new java.awt.Color(53, 100, 155));
         submitButtonLogin.setText("Masuk");
         submitButtonLogin.setPreferredSize(new java.awt.Dimension(118, 34));
         submitButtonLogin.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -214,11 +211,11 @@ public class LoginForm extends javax.swing.JFrame {
         });
 
         jLabel6.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel6.setForeground(new java.awt.Color(53, 100, 155));
         jLabel6.setText("Belum punya akun?");
 
-        redirectRegister.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
-        redirectRegister.setForeground(new java.awt.Color(27, 146, 93));
+        redirectRegister.setFont(new java.awt.Font("Poppins SemiBold", 0, 14)); // NOI18N
+        redirectRegister.setForeground(new java.awt.Color(70, 100, 155));
         redirectRegister.setText("Daftar di sini");
         redirectRegister.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -354,7 +351,7 @@ public class LoginForm extends javax.swing.JFrame {
                     SetUpBisnisProfilePanel formSetup = new SetUpBisnisProfilePanel();
                     formSetup.setVisible(true);
                 } else {
-                    Index indexPage = new Index();
+                    MainTycoonSandbox indexPage = new MainTycoonSandbox();
                     indexPage.setVisible(true);
 
                     this.dispose();

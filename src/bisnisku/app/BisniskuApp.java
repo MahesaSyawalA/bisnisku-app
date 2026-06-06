@@ -27,7 +27,7 @@ public class BisniskuApp {
          java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 if (checkSession() == true) {
-                    new Index().setVisible(true);
+                    new MainTycoonSandbox().setVisible(true);
                 } else {
                     new LoginForm().setVisible(true);
                 }

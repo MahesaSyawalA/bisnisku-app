@@ -35,7 +35,7 @@ import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
  */
 public class Index extends javax.swing.JFrame {
 
-    connection conn;
+    connection conn;    
 
     private TrackYourExpensesController controller;
     private DashboardController dashboardController;

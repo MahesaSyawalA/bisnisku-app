@@ -103,7 +103,7 @@ public class TrackYourExpensesController {
         DefaultTableModel model = new DefaultTableModel(null, kolom);
         int userId = UserSession.getUserId();
 
-        String sql = "SELECT id, nama, nominal, kategori FROM transaksi WHERE user_id = ? ORDER BY id DESC LIMIT 10";
+        String sql = "SELECT id, nama, nominal, kategori FROM transaksi WHERE user_id = ? ORDER BY id DESC LIMIT 25";
 
         try (PreparedStatement ps = conn.getConnection().prepareStatement(sql)) {
             ps.setInt(1, userId);

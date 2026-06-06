@@ -60,7 +60,6 @@ public class SetUpBisnisProfilePanel extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -71,18 +70,17 @@ public class SetUpBisnisProfilePanel extends javax.swing.JFrame {
         submitCreateBisnis = new javax.swing.JButton();
         bisnisBudget = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
-
-        jLabel1.setFont(new java.awt.Font("Poppins", 1, 20)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Setup Profile Bisnis");
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jTextField1.setFont(new java.awt.Font("Poppins SemiBold", 0, 10)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(53, 100, 155));
         jTextField1.setText("Langkah ini hanya muncul sekali. Modal awal menjadi patokan semua kalkulasi.");
-        jTextField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jTextField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(53, 100, 155), 1, true));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -90,15 +88,15 @@ public class SetUpBisnisProfilePanel extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(53, 100, 155));
         jLabel2.setText("Nama Bisnis");
 
         bisnisName.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
-        bisnisName.setForeground(new java.awt.Color(102, 102, 102));
+        bisnisName.setForeground(new java.awt.Color(53, 100, 155));
         bisnisName.setText("Contoh: Warung Kopi Tskuy");
 
         bisnisOwner.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
-        bisnisOwner.setForeground(new java.awt.Color(102, 102, 102));
+        bisnisOwner.setForeground(new java.awt.Color(53, 100, 155));
         bisnisOwner.setText("Contoh: Ahmad Supendi");
         bisnisOwner.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,18 +105,17 @@ public class SetUpBisnisProfilePanel extends javax.swing.JFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setForeground(new java.awt.Color(53, 100, 155));
         jLabel3.setText("Nama Pemilik");
 
         jLabel5.setFont(new java.awt.Font("Poppins", 1, 10)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setForeground(new java.awt.Color(53, 100, 155));
         jLabel5.setText("Jumlah uang yang kamu siapkan untuk bisnis ini");
 
-        submitCreateBisnis.setBackground(new java.awt.Color(51, 51, 51));
         submitCreateBisnis.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
-        submitCreateBisnis.setForeground(new java.awt.Color(255, 255, 255));
+        submitCreateBisnis.setForeground(new java.awt.Color(53, 100, 155));
         submitCreateBisnis.setText("Mulai Kelola Bisnis");
-        submitCreateBisnis.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
+        submitCreateBisnis.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(53, 100, 155), 1, true));
         submitCreateBisnis.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 submitCreateBisnisMouseClicked(evt);
@@ -126,7 +123,7 @@ public class SetUpBisnisProfilePanel extends javax.swing.JFrame {
         });
 
         bisnisBudget.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
-        bisnisBudget.setForeground(new java.awt.Color(102, 102, 102));
+        bisnisBudget.setForeground(new java.awt.Color(53, 100, 155));
         bisnisBudget.setText("Contoh: 8000000");
         bisnisBudget.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,8 +132,32 @@ public class SetUpBisnisProfilePanel extends javax.swing.JFrame {
         });
 
         jLabel6.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setForeground(new java.awt.Color(53, 100, 155));
         jLabel6.setText("Modal Awal(Rp)");
+
+        jPanel1.setBackground(new java.awt.Color(232, 240, 254));
+
+        jLabel1.setBackground(new java.awt.Color(232, 240, 254));
+        jLabel1.setFont(new java.awt.Font("Poppins", 1, 20)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(53, 100, 155));
+        jLabel1.setText("Setup Profile Bisnis");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -148,7 +169,6 @@ public class SetUpBisnisProfilePanel extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel5)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
                     .addComponent(bisnisName)
                     .addComponent(bisnisOwner)
@@ -156,14 +176,16 @@ public class SetUpBisnisProfilePanel extends javax.swing.JFrame {
                     .addComponent(submitCreateBisnis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(bisnisBudget)
                     .addComponent(jLabel6))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -191,7 +213,7 @@ public class SetUpBisnisProfilePanel extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -265,7 +287,7 @@ public class SetUpBisnisProfilePanel extends javax.swing.JFrame {
                 UserSession.setNamaBisnis(namaBisnis);
                 UserSession.setModal(modalAwal);
 
-                Index indexPage = new Index();
+                MainTycoonSandbox indexPage = new MainTycoonSandbox();
                 indexPage.setVisible(true);
 
                 this.dispose();
@@ -328,6 +350,7 @@ public class SetUpBisnisProfilePanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextField1;
