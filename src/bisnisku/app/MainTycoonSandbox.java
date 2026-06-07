@@ -2089,7 +2089,7 @@ public class MainTycoonSandbox extends javax.swing.JFrame {
                                 .addGap(10, 10, 10)
                                 .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel23Layout.createSequentialGroup()
-                                        .addGap(1, 1, 1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1, Short.MAX_VALUE)
                                         .addComponent(jP6ShowLeaderboardButton))
                                     .addComponent(jPanel33, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel23Layout.createSequentialGroup()
