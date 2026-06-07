@@ -61,22 +61,21 @@ public class MainTycoonSandbox extends javax.swing.JFrame {
      */
     public MainTycoonSandbox() {
         initComponents();
-        
+
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         int width = (int) (screenSize.width * 0.85);
         int height = (int) (screenSize.height * 0.85);
         this.setSize(width, height);
-        this.setLocationRelativeTo(null); 
-        
+        this.setLocationRelativeTo(null);
+
         //fix leaderboard
         jLabel14.setVisible(false);
         jPanel30.setLayout(new java.awt.BorderLayout());
         jPanel30.add(jPanel23, java.awt.BorderLayout.CENTER);
         jScrollPane7.setHorizontalScrollBarPolicy(
-            javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER
+                javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER
         );
-        
-        
+
         //set Init Title      
         this.setTitle("Bisnisku App - Dashboard");
         //set icon app         
@@ -288,6 +287,15 @@ public class MainTycoonSandbox extends javax.swing.JFrame {
         jP1level.setText((String) data.get("levelText"));
         jP1levelDesc.setText((String) data.get("levelDescText"));
 
+        String iconPath = (String) data.get("iconPath");
+        if (iconPath != null) {
+            try {
+                jP1level.setIcon(new javax.swing.ImageIcon(getClass().getResource(iconPath)));
+            } catch (Exception e) {
+                System.out.println("Gagal memuat icon level dashboard: " + e.getMessage());
+            }
+        }
+        
         int levelStatus = (int) data.get("levelStatus");
         switch (levelStatus) {
             case 1 ->
@@ -906,6 +914,7 @@ public class MainTycoonSandbox extends javax.swing.JFrame {
         jP1level.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jP1level.setText("Level: Pengusaha sehat");
         jP1level.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jP1level.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
 
         jP1levelDesc.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
         jP1levelDesc.setForeground(new java.awt.Color(30, 58, 138));

@@ -478,6 +478,7 @@
                             <Property name="horizontalAlignment" type="int" value="0"/>
                             <Property name="text" type="java.lang.String" value="Level: Pengusaha sehat"/>
                             <Property name="verticalAlignment" type="int" value="3"/>
+                            <Property name="verticalTextPosition" type="int" value="1"/>
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JLabel" name="jP1levelDesc">
