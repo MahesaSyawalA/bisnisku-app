@@ -54,14 +54,14 @@ public class RegisterForm extends javax.swing.JFrame {
             public void focusGained(java.awt.event.FocusEvent e) {
                 if (jTextFieldUsername.getText().equals("Masukan Username")) {
                     jTextFieldUsername.setText("");
-                    jTextFieldUsername.setForeground(new java.awt.Color(204, 204, 204));
+                    jTextFieldUsername.setForeground(new java.awt.Color(53,100,155));
                 }
             }
 
             public void focusLost(java.awt.event.FocusEvent e) {
                 if (jTextFieldUsername.getText().isEmpty()) {
                     jTextFieldUsername.setText("Masukan Username");
-                    jTextFieldUsername.setForeground(new java.awt.Color(153, 153, 153));
+                    jTextFieldUsername.setForeground(new java.awt.Color(53,100,155));
                 }
             }
         });
@@ -71,14 +71,14 @@ public class RegisterForm extends javax.swing.JFrame {
             public void focusGained(java.awt.event.FocusEvent e) {
                 if (new String(jPasswordField1.getPassword()).equals("jPasswordField1")) {
                     jPasswordField1.setText("");
-                    jPasswordField1.setForeground(new java.awt.Color(204, 204, 204));
+                    jPasswordField1.setForeground(new java.awt.Color(53,100,155));
                 }
             }
 
             public void focusLost(java.awt.event.FocusEvent e) {
                 if (new String(jPasswordField1.getPassword()).isEmpty()) {
                     jPasswordField1.setText("jPasswordField1");
-                    jPasswordField1.setForeground(new java.awt.Color(153, 153, 153));
+                    jPasswordField1.setForeground(new java.awt.Color(53,100,155));
                 }
             }
         });
@@ -88,14 +88,14 @@ public class RegisterForm extends javax.swing.JFrame {
             public void focusGained(java.awt.event.FocusEvent e) {
                 if (new String(jPasswordField2.getPassword()).equals("jPasswordField1")) {
                     jPasswordField2.setText("");
-                    jPasswordField2.setForeground(new java.awt.Color(204, 204, 204));
+                    jPasswordField2.setForeground(new java.awt.Color(53,100,155));
                 }
             }
 
             public void focusLost(java.awt.event.FocusEvent e) {
                 if (new String(jPasswordField2.getPassword()).isEmpty()) {
                     jPasswordField2.setText("jPasswordField1");
-                    jPasswordField2.setForeground(new java.awt.Color(153, 153, 153));
+                    jPasswordField2.setForeground(new java.awt.Color(53,100,155));
                 }
             }
         });
@@ -143,14 +143,14 @@ public class RegisterForm extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jHeading1.setFont(new java.awt.Font("Poppins Medium", 1, 18)); // NOI18N
-        jHeading1.setForeground(new java.awt.Color(255, 255, 255));
+        jHeading1.setForeground(new java.awt.Color(53, 100, 155));
         jHeading1.setText("Buat akun baru");
 
         jLabelUsername.setFont(new java.awt.Font("Poppins Light", 1, 12)); // NOI18N
         jLabelUsername.setForeground(new java.awt.Color(53, 100, 155));
         jLabelUsername.setText("Username");
 
-        jsubHead.setFont(new java.awt.Font("Poppins Light", 1, 12)); // NOI18N
+        jsubHead.setFont(new java.awt.Font("Poppins Light", 1, 14)); // NOI18N
         jsubHead.setForeground(new java.awt.Color(53, 100, 155));
         jsubHead.setText("Mari mulai petualangan baru");
 
@@ -196,7 +196,7 @@ public class RegisterForm extends javax.swing.JFrame {
         jPasswordField2.setText("jPasswordField1");
         jPasswordField2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(53, 100, 155), 2, true));
 
-        redirectLogin.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
+        redirectLogin.setFont(new java.awt.Font("Poppins Medium", 1, 12)); // NOI18N
         redirectLogin.setForeground(new java.awt.Color(53, 100, 155));
         redirectLogin.setText("Masuk");
         redirectLogin.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -215,9 +215,6 @@ public class RegisterForm extends javax.swing.JFrame {
                         .addGap(189, 189, 189)
                         .addComponent(jHeading1))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(169, 169, 169)
-                        .addComponent(jsubHead))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabelUsername)
@@ -233,6 +230,10 @@ public class RegisterForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(redirectLogin)))
                 .addContainerGap(43, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 156, Short.MAX_VALUE)
+                .addComponent(jsubHead)
+                .addGap(148, 148, 148))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,7 +241,7 @@ public class RegisterForm extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addComponent(jHeading1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jsubHead)
+                .addComponent(jsubHead, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17)
                 .addComponent(jLabelUsername)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

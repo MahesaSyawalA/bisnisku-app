@@ -20,10 +20,11 @@ public class RekapController {
 
         String sql = "SELECT DISTINCT DATE_FORMAT(tanggal, '%Y-%m') AS bulan FROM transaksi WHERE user_id = ? ORDER BY bulan DESC";
 
-        try (Connection conn = connection.getKoneksi();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            
-            if (conn == null) return months;
+        try (Connection conn = connection.getKoneksi(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            if (conn == null) {
+                return months;
+            }
 
             ps.setInt(1, userId);
             try (ResultSet rs = ps.executeQuery()) {
@@ -57,7 +58,9 @@ public class RekapController {
             try (PreparedStatement ps = conn.prepareStatement(sqlModal)) {
                 ps.setInt(1, userId);
                 try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) modalAwal = rs.getDouble("modal_awal");
+                    if (rs.next()) {
+                        modalAwal = rs.getDouble("modal_awal");
+                    }
                 }
             }
 
@@ -66,7 +69,9 @@ public class RekapController {
             try (PreparedStatement ps = conn.prepareStatement(sqlKeluar)) {
                 ps.setInt(1, userId);
                 try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) totalKeluar = rs.getDouble("total");
+                    if (rs.next()) {
+                        totalKeluar = rs.getDouble("total");
+                    }
                 }
             }
 
@@ -75,13 +80,15 @@ public class RekapController {
             try (PreparedStatement ps = conn.prepareStatement(sqlMasuk)) {
                 ps.setInt(1, userId);
                 try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) totalPemasukan = rs.getDouble("total");
+                    if (rs.next()) {
+                        totalPemasukan = rs.getDouble("total");
+                    }
                 }
             }
 
             // 4. Kalkulasi Saldo dan Formatting
             double saldoTotal = modalAwal + totalPemasukan - totalKeluar;
-            
+
             data.put("modalAwalStr", "RP. " + String.format("%,.0f", modalAwal));
             data.put("saldoTotalStr", "RP. " + String.format("%,.0f", saldoTotal));
             data.put("isSaldoNegative", saldoTotal < 0);
@@ -125,7 +132,12 @@ public class RekapController {
 
                 try (ResultSet rs = ps.executeQuery()) {
                     DefaultTableModel model = new DefaultTableModel(
-                            new String[]{"Kategori", "Total Nominal", "Bulan"}, 0);
+                            new String[]{"Kategori", "Total Nominal", "Bulan"}, 0) {
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                            return false;
+                        }
+                    };
 
                     while (rs.next()) {
                         model.addRow(new Object[]{
@@ -134,7 +146,8 @@ public class RekapController {
                             rs.getString("bulan_transaksi")
                         });
                     }
-                    data.put("tableModel", model);
+                    data.put(
+                            "tableModel", model);
                 }
             }
 
@@ -144,4 +157,5 @@ public class RekapController {
 
         return data;
     }
+
 }

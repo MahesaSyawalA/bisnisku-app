@@ -56,7 +56,12 @@ public class CategoryController {
                 // 2. Eksekusi Query dan Olah Data
                 try (ResultSet rs = ps.executeQuery()) {
                     DefaultTableModel model = new DefaultTableModel(
-                            new String[]{"Tanggal", "Nama", "Nominal", "Kat."}, 0);
+                            new String[]{"Tanggal", "Nama", "Nominal", "Kat."}, 0) {
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                            return false; 
+                        }
+                    };
 
                     int totalTransaksi = 0;
                     double totalNominal = 0;
@@ -84,10 +89,15 @@ public class CategoryController {
                         // Singkatan Kategori
                         String katRaw = rs.getString("kategori");
                         String katShort = katRaw;
-                        if (katRaw.equalsIgnoreCase("Operasional")) katShort = "Op.";
-                        else if (katRaw.equalsIgnoreCase("Utilitas")) katShort = "Util.";
-                        else if (katRaw.equalsIgnoreCase("Gaya Hidup")) katShort = "GL";
-                        else if (katRaw.equalsIgnoreCase("Gaji Karyawan")) katShort = "Gaji";
+                        if (katRaw.equalsIgnoreCase("Operasional")) {
+                            katShort = "Op.";
+                        } else if (katRaw.equalsIgnoreCase("Utilitas")) {
+                            katShort = "Util.";
+                        } else if (katRaw.equalsIgnoreCase("Gaya Hidup")) {
+                            katShort = "GL";
+                        } else if (katRaw.equalsIgnoreCase("Gaji Karyawan")) {
+                            katShort = "Gaji";
+                        }
 
                         model.addRow(new Object[]{
                             formattedDate,

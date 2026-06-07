@@ -105,7 +105,14 @@ public class DashboardController {
             try (PreparedStatement ps = conn.prepareStatement(sqlTabel)) {
                 ps.setInt(1, userId);
                 try (ResultSet rs = ps.executeQuery()) {
-                    DefaultTableModel model = new DefaultTableModel(new String[]{"Nama", "Nominal", "Tanggal"}, 0);
+
+                    DefaultTableModel model = new DefaultTableModel(new String[]{"Nama", "Nominal", "Tanggal"}, 0) {
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                            return false;
+                        }
+                    };
+
                     while (rs.next()) {
                         model.addRow(new Object[]{
                             rs.getString("nama"),

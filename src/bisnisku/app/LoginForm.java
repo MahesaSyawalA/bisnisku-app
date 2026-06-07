@@ -58,14 +58,14 @@ public class LoginForm extends javax.swing.JFrame {
             public void focusGained(java.awt.event.FocusEvent e) {
                 if (usernameInput.getText().equals("Masukan username anda")) {
                     usernameInput.setText("");
-                    usernameInput.setForeground(new java.awt.Color(204, 204, 204));
+                    usernameInput.setForeground(new java.awt.Color(53,100,155));
                 }
             }
 
             public void focusLost(java.awt.event.FocusEvent e) {
                 if (usernameInput.getText().isEmpty()) {
                     usernameInput.setText("Masukan username anda");
-                    usernameInput.setForeground(new java.awt.Color(153, 153, 153));
+                    usernameInput.setForeground(new java.awt.Color(53,100,155));
                 }
             }
         });
@@ -75,14 +75,14 @@ public class LoginForm extends javax.swing.JFrame {
             public void focusGained(java.awt.event.FocusEvent e) {
                 if (new String(passwordInput.getPassword()).equals("jPasswordField1")) {
                     passwordInput.setText("");
-                    passwordInput.setForeground(new java.awt.Color(204, 204, 204));
+                    passwordInput.setForeground(new java.awt.Color(53,100,155));
                 }
             }
 
             public void focusLost(java.awt.event.FocusEvent e) {
                 if (new String(passwordInput.getPassword()).isEmpty()) {
                     passwordInput.setText("jPasswordField1");
-                    passwordInput.setForeground(new java.awt.Color(153, 153, 153));
+                    passwordInput.setForeground(new java.awt.Color(53,100,155));
                 }
             }
         });

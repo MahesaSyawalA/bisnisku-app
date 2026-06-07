@@ -19,7 +19,12 @@ public class LeaderboardController {
         data.put("top3Name", "-");
 
         // Buat model tabel kosong
-        DefaultTableModel model = new DefaultTableModel(new String[]{"Nama", "Nominal", "Tanggal"}, 0);
+        DefaultTableModel model = new DefaultTableModel(new String[]{"Nama", "Nominal", "Tanggal"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
 
         try (Connection conn = connection.getKoneksi()) {
             if (conn == null) {
@@ -37,8 +42,7 @@ public class LeaderboardController {
                     + "  ON b.user_id = t.user_id "
                     + "ORDER BY saldo DESC";
 
-            try (Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery(sql)) {
+            try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
 
                 int rank = 1;
                 while (rs.next()) {
@@ -64,7 +68,7 @@ public class LeaderboardController {
                     rank++;
                 }
             }
-            
+
             // Masukkan model tabel yang sudah diisi ke dalam Map
             data.put("tableModel", model);
 

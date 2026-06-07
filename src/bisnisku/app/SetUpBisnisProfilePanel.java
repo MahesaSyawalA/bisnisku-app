@@ -123,6 +123,7 @@ public class SetUpBisnisProfilePanel extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
+        jTextField1.setEditable(false);
         jTextField1.setFont(new java.awt.Font("Poppins SemiBold", 0, 10)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(53, 100, 155));
         jTextField1.setText("Langkah ini hanya muncul sekali. Modal awal menjadi patokan semua kalkulasi.");
@@ -186,6 +187,7 @@ public class SetUpBisnisProfilePanel extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(232, 240, 254));
         jLabel1.setFont(new java.awt.Font("Poppins", 1, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(53, 100, 155));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bisnisku/app/assets/logobinikuuu.png"))); // NOI18N
         jLabel1.setText("Setup Profile Bisnis");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
