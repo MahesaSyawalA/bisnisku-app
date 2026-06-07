@@ -47,6 +47,52 @@ public class SetUpBisnisProfilePanel extends javax.swing.JFrame {
         });
 
         conn = new connection();
+        
+        bisnisName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (bisnisName.getText().startsWith("Contoh:")) {
+                    bisnisName.setText("");
+                    bisnisName.setForeground(new java.awt.Color(53, 100, 155));
+                }
+            }
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (bisnisName.getText().isEmpty()) {
+                    bisnisName.setText("Contoh: Warung Kopi Tskuy");
+                    bisnisName.setForeground(new java.awt.Color(153, 153, 153));
+                }
+            }
+        });
+
+        bisnisOwner.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (bisnisOwner.getText().startsWith("Contoh:")) {
+                    bisnisOwner.setText("");
+                    bisnisOwner.setForeground(new java.awt.Color(53, 100, 155));
+                }
+            }
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (bisnisOwner.getText().isEmpty()) {
+                    bisnisOwner.setText("Contoh: Ahmad Supendi");
+                    bisnisOwner.setForeground(new java.awt.Color(153, 153, 153));
+                }
+            }
+        });
+
+        bisnisBudget.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (bisnisBudget.getText().startsWith("Contoh:")) {
+                    bisnisBudget.setText("");
+                    bisnisBudget.setForeground(new java.awt.Color(53, 100, 155));
+                }
+            }
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (bisnisBudget.getText().isEmpty()) {
+                    bisnisBudget.setText("Contoh: 8000000");
+                    bisnisBudget.setForeground(new java.awt.Color(153, 153, 153));
+                }
+            }
+        });
+        
         this.setLocationRelativeTo(null);
     }
 

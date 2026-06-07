@@ -61,6 +61,22 @@ public class MainTycoonSandbox extends javax.swing.JFrame {
      */
     public MainTycoonSandbox() {
         initComponents();
+        
+        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int) (screenSize.width * 0.85);
+        int height = (int) (screenSize.height * 0.85);
+        this.setSize(width, height);
+        this.setLocationRelativeTo(null); 
+        
+        //fix leaderboard
+        jLabel14.setVisible(false);
+        jPanel30.setLayout(new java.awt.BorderLayout());
+        jPanel30.add(jPanel23, java.awt.BorderLayout.CENTER);
+        jScrollPane7.setHorizontalScrollBarPolicy(
+            javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER
+        );
+        
+        
         //set Init Title      
         this.setTitle("Bisnisku App - Dashboard");
         //set icon app         
@@ -773,7 +789,7 @@ public class MainTycoonSandbox extends javax.swing.JFrame {
 
         jButtonSimulasi.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jButtonSimulasi.setForeground(new java.awt.Color(53, 100, 155));
-        jButtonSimulasi.setText("Simulasi");
+        jButtonSimulasi.setText("Permainan");
         jButtonSimulasi.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 15, 1, 1));
         jButtonSimulasi.setBorderPainted(false);
         jButtonSimulasi.setContentAreaFilled(false);
@@ -860,7 +876,7 @@ public class MainTycoonSandbox extends javax.swing.JFrame {
                 .addComponent(jButtonSimulasi, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonPeringkat, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 517, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtonLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -963,7 +979,7 @@ public class MainTycoonSandbox extends javax.swing.JFrame {
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel19)
                     .addComponent(jP1modalAwal))
-                .addContainerGap(140, Short.MAX_VALUE))
+                .addContainerGap(142, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1025,7 +1041,7 @@ public class MainTycoonSandbox extends javax.swing.JFrame {
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel22)
                     .addComponent(jP1transaksiTerakhir))
-                .addContainerGap(139, Short.MAX_VALUE))
+                .addContainerGap(140, Short.MAX_VALUE))
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1144,18 +1160,17 @@ public class MainTycoonSandbox extends javax.swing.JFrame {
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel21Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
-                    .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel21Layout.createSequentialGroup()
-                            .addComponent(jLabel5)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jP1namaBisnis))
-                        .addComponent(levelPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addGroup(jPanel21Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jP1namaBisnis))
+                    .addComponent(levelPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(15, 15, 15))
         );
         jPanel21Layout.setVerticalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1370,7 +1385,7 @@ public class MainTycoonSandbox extends javax.swing.JFrame {
                             .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                            .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
                             .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(26, 26, 26))
         );
@@ -1442,8 +1457,6 @@ public class MainTycoonSandbox extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jP3YearDropdown.setForeground(new java.awt.Color(53, 100, 155));
-
         jP3MonthDropdown.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jP3MonthDropdown.setForeground(new java.awt.Color(53, 100, 155));
 
@@ -1491,12 +1504,6 @@ public class MainTycoonSandbox extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel19Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel19Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane10))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel19Layout.createSequentialGroup()
                         .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel19Layout.createSequentialGroup()
                                 .addGap(14, 14, 14)
@@ -1506,7 +1513,12 @@ public class MainTycoonSandbox extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel19Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel11)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel19Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
+                            .addComponent(jScrollPane10, javax.swing.GroupLayout.Alignment.LEADING))))
                 .addGap(12, 12, 12))
         );
         jPanel19Layout.setVerticalGroup(
@@ -2053,7 +2065,9 @@ public class MainTycoonSandbox extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jsubHead1)
-                    .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel23Layout.createSequentialGroup()
+                        .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGap(10, 10, 10))
                     .addGroup(jPanel23Layout.createSequentialGroup()
                         .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jHeading1)
@@ -2268,7 +2282,7 @@ public class MainTycoonSandbox extends javax.swing.JFrame {
         jButtonSimulasi.setForeground(java.awt.Color.decode("#35649b"));
         jButtonSimulasi.setOpaque(true);
         jButtonSimulasi.setBackground(java.awt.Color.decode("#E8F0FE"));
-        this.setTitle("Bisnisku App - Simulasi");
+        this.setTitle("Bisnisku App - Permainan");
     }//GEN-LAST:event_jButtonSimulasiActionPerformed
 
     private void jButtonPeringkatMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonPeringkatMouseEntered
@@ -2513,7 +2527,14 @@ public class MainTycoonSandbox extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new MainTycoonSandbox().setVisible(true));
+//        java.awt.EventQueue.invokeLater(() -> new MainTycoonSandbox().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> {
+            if (UserSession.getUserId() > 0) {
+                new MainTycoonSandbox().setVisible(true);
+            } else {
+                new LoginForm().setVisible(true);
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

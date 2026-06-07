@@ -130,7 +130,7 @@ public class LoginForm extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setFont(new java.awt.Font("Poppins Medium", 1, 22)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(53, 100, 155));
         jLabel2.setText("Masuk ke akun bisnis");
 
         jLabel3.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
@@ -350,6 +350,8 @@ public class LoginForm extends javax.swing.JFrame {
 
                     SetUpBisnisProfilePanel formSetup = new SetUpBisnisProfilePanel();
                     formSetup.setVisible(true);
+                    
+                    this.dispose();
                 } else {
                     MainTycoonSandbox indexPage = new MainTycoonSandbox();
                     indexPage.setVisible(true);
